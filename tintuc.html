@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin tức & Sự kiện | Khoa CNTT - HUIT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="py-5">
+        <div class="container">
+            <h1 class="fw-bold mb-5 reveal text-center">Tin tức & Sự kiện</h1>
+
+            <!-- Category Tabs -->
+            <ul class="nav nav-tabs mb-5 justify-content-center border-0 reveal" id="newsTabs" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active border-0 rounded-pill px-4 mx-2 glass-card btn-interactive" data-category="all">Tất cả</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link border-0 rounded-pill px-4 mx-2 glass-card btn-interactive" data-category="student">Tin sinh viên</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link border-0 rounded-pill px-4 mx-2 glass-card btn-interactive" data-category="academic">Tin học thuật</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link border-0 rounded-pill px-4 mx-2 glass-card btn-interactive" data-category="notice">Thông báo</button>
+                </li>
+            </ul>
+
+            <!-- News Grid -->
+            <div class="row" id="news-container">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Pagination -->
+            <nav class="mt-5 reveal">
+                <ul class="pagination justify-content-center" id="pagination">
+                    <!-- Injected via JS -->
+                </ul>
+            </nav>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        const newsData = Array.from({ length: 20 }, (_, i) => ({
+            id: i + 1,
+            title: `Tin tức số ${i + 1}: Cập nhật hoạt động Khoa CNTT`,
+            category: ['student', 'academic', 'notice'][i % 3],
+            categoryName: ['Tin sinh viên', 'Tin học thuật', 'Thông báo'][i % 3],
+            date: '02/06/2026',
+            summary: 'Tóm tắt nội dung bài viết tin tức quan trọng dành cho sinh viên và giảng viên...',
+            img: `https://placehold.co/400x250?text=News+${i + 1}`
+        }));
+
+        let currentPage = 1;
+        const itemsPerPage = 6;
+        let currentCategory = 'all';
+
+        function renderNews() {
+            const container = $('#news-container');
+            container.empty();
+
+            const filtered = currentCategory === 'all' 
+                ? newsData 
+                : newsData.filter(n => n.category === currentCategory);
+
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginated = filtered.slice(start, end);
+
+            paginated.forEach((n, index) => {
+                const card = `
+                    <div class="col-md-4 mb-4 reveal" style="transition-delay: ${index * 0.1}s">
+                        <div class="glass-card h-100 overflow-hidden">
+                            <img src="${n.img}" class="card-img-top" alt="${n.title}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="badge bg-primary-subtle text-primary">${n.categoryName}</span>
+                                    <small class="text-muted"><i class="far fa-calendar-alt me-1"></i> ${n.date}</small>
+                                </div>
+                                <h5 class="fw-bold mb-2 h6">${n.title}</h5>
+                                <p class="small text-secondary mb-3">${n.summary}</p>
+                                <a href="#" class="btn btn-link p-0 text-decoration-none small fw-bold">Xem chi tiết <i class="fas fa-chevron-right ms-1"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.append(card);
+            });
+
+            renderPagination(filtered.length);
+            $('.reveal').addClass('active');
+        }
+
+        function renderPagination(totalItems) {
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            const pagContainer = $('#pagination');
+            pagContainer.empty();
+
+            for (let i = 1; i <= totalPages; i++) {
+                pagContainer.append(`
+                    <li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a class="page-link border-0 mx-1 rounded glass-card" href="#" onclick="changePage(${i})">${i}</a>
+                    </li>
+                `);
+            }
+        }
+
+        window.changePage = (page) => {
+            currentPage = page;
+            renderNews();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        $(document).ready(function() {
+            renderNews();
+
+            $('#newsTabs button').click(function() {
+                $('#newsTabs button').removeClass('active');
+                $(this).addClass('active');
+                currentCategory = $(this).data('category');
+                currentPage = 1;
+                renderNews();
+            });
+        });
+    </script>
+</body>
+</html>
