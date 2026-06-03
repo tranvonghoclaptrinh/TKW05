@@ -7,84 +7,194 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        /* ==========================================================================
+           OPTIMIZED: LECTURER DIRECTORY MODULE (LIGHT/DARK INTEGRATION)
+           ========================================================================== */
+
+        /* 1. Thiết lập cấu trúc thanh điều hướng dính (Sticky Aside) */
+        aside .sticky-top {
+            top: 100px;
+            z-index: 10;
+            transition: var(--transition-standard);
+        }
+
+        /* 2. Tối ưu hóa các trường nhập liệu (Input & Select) theo Glassmorphic */
+        .id-lecturer-section .form-control,
+        .id-lecturer-section .form-select {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-main) !important;
+            border-radius: 8px;
+            transition: var(--transition-standard);
+        }
+
+        .id-lecturer-section .form-control:focus,
+        .id-lecturer-section .form-select:focus {
+            background-color: var(--surface-color) !important;
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 3px var(--primary-light) !important;
+        }
+
+        /* Đổi màu chữ gợi ý (Placeholder) */
+        .id-lecturer-section .form-control::placeholder {
+            color: var(--text-secondary) !important;
+            opacity: 0.7;
+        }
+
+        /* 3. Tối ưu hóa các nhãn text và bộ chọn Checkbox */
+        .id-lecturer-section .form-check-label {
+            color: var(--text-main);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .id-lecturer-section .form-check-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .id-lecturer-section .form-check-input:checked {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+        }
+
+        /* 4. Thẻ thông tin giảng viên (Lecturer Card) */
+        .lecturer-card {
+            color: var(--text-main);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                        box-shadow 0.3s ease, 
+                        border-color 0.3s ease !important;
+        }
+
+        .lecturer-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 12px 30px var(--shadow-color) !important;
+        }
+
+        .lecturer-card .text-muted,
+        .lecturer-card .text-secondary {
+            color: var(--text-secondary) !important;
+        }
+
+        /* 5. Tối ưu hóa hoàn toàn cấu trúc Modal trong Dark Mode */
+        .id-lecturer-modal .modal-content {
+            background: var(--glass-bg) !important;
+            backdrop-filter: var(--glass-blur) !important;
+            -webkit-backdrop-filter: var(--glass-blur) !important;
+            border: 1px solid var(--glass-border) !important;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            color: var(--text-main) !important;
+        }
+
+        .id-lecturer-modal .modal-header,
+        .id-lecturer-modal .modal-footer {
+            border-color: var(--border-color) !important;
+        }
+
+        .id-lecturer-modal .btn-close {
+            filter: var(--close-btn-filter, none);
+            transition: var(--transition-standard);
+        }
+
+        /* ==========================================================================
+           SPECIFIC DARK MODE REFINE (Kích hoạt tự động qua data-theme="dark")
+           ========================================================================== */
+        [data-theme="dark"] .id-lecturer-section,
+        [data-theme="dark"] .id-lecturer-modal {
+            --close-btn-filter: invert(1) grayscale(1) brightness(2);
+            --custom-neon: #00d2ff;
+        }
+
+        [data-theme="dark"] .id-lecturer-section h1,
+        [data-theme="dark"] .id-lecturer-section h5,
+        [data-theme="dark"] .id-lecturer-section .text-primary,
+        [data-theme="dark"] .id-lecturer-modal .text-primary {
+            color: var(--custom-neon) !important;
+        }
+
+        /* Tối ưu hóa thẻ Select Options trên trình duyệt nền tối */
+        [data-theme="dark"] .id-lecturer-section .form-select option {
+            background-color: #101b2c !important;
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
 
-    <main class="py-5">
+    <main class="py-5 id-lecturer-section">
         <div class="container">
             <h1 class="fw-bold mb-5 reveal text-center">Đội ngũ Giảng viên</h1>
 
             <div class="row">
-                <!-- Sidebar Filter (E-commerce style) -->
+                <!-- Sidebar Filter (E-commerce Style) -->
                 <aside class="col-lg-3 mb-4">
-                    <div class="glass-card p-4 sticky-top" style="top: 100px; z-index: 100;">
+                    <div class="glass-card p-4 sticky-top">
                         <h5 class="fw-bold mb-4"><i class="fas fa-filter me-2"></i>Bộ lọc</h5>
                         
                         <div class="mb-4">
-                            <label class="form-label fw-bold small text-uppercase">Tìm kiếm</label>
+                            <label class="form-label fw-bold small text-uppercase">Tìm kiếm giảng viên</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
-                                <input type="text" id="lecturer-search" class="form-control border-start-0" placeholder="Tên giảng viên...">
+                                <span class="input-group-text bg-transparent" style="border: 1px solid var(--border-color); border-end-0: none;"><i class="fas fa-search text-muted"></i></span>
+                                <input type="text" id="lecturer-search" class="form-control border-start-0" placeholder="Nhập tên hoặc bộ môn...">
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-bold small text-uppercase">Bộ môn</label>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input filter-dept" type="checkbox" value="HTTT" id="dept1" checked>
-                                <label class="form-check-label small" for="dept1">Hệ thống thông tin</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input filter-dept" type="checkbox" value="KHMT" id="dept2" checked>
-                                <label class="form-check-label small" for="dept2">Khoa học máy tính</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input filter-dept" type="checkbox" value="CNPM" id="dept3" checked>
-                                <label class="form-check-label small" for="dept3">Công nghệ phần mềm</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input filter-dept" type="checkbox" value="ANMT" id="dept4" checked>
-                                <label class="form-check-label small" for="dept4">An ninh mạng</label>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label fw-bold small text-uppercase">Học hàm/Học vị</label>
-                            <select class="form-select form-select-sm" id="filter-degree">
-                                <option value="all">Tất cả</option>
-                                <option value="GS">Giáo sư</option>
-                                <option value="PGS">Phó Giáo sư</option>
-                                <option value="TS">Tiến sĩ</option>
+                            <label class="form-label fw-bold small text-uppercase">Học vị</label>
+                            <select id="filter-degree" class="form-select">
+                                <option value="all">Tất cả học vị</option>
+                                <option value="TS">Tiến sĩ / Phó Giáo sư</option>
                                 <option value="ThS">Thạc sĩ</option>
                             </select>
                         </div>
 
-                        <button class="btn btn-outline-primary btn-sm w-100 rounded-pill btn-interactive" id="reset-filters">Xóa bộ lọc</button>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-uppercase">Bộ môn</label>
+                            <div id="dept-checkboxes">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input filter-dept" type="checkbox" value="CNPM" id="dept-cnpm" checked>
+                                    <label class="form-check-label" for="dept-cnpm">Công nghệ phần mềm</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input filter-dept" type="checkbox" value="HTTT" id="dept-httt" checked>
+                                    <label class="form-check-label" for="dept-httt">Hệ thống thông tin</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input filter-dept" type="checkbox" value="KHMT" id="dept-khmt" checked>
+                                    <label class="form-check-label" for="dept-khmt">Khoa học máy tính</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input filter-dept" type="checkbox" value="MMT" id="dept-mmt" checked>
+                                    <label class="form-check-label" for="dept-mmt">Mạng máy tính & ANTT</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="reset-filters" class="btn btn-outline-secondary w-100 btn-interactive"><i class="fas fa-undo me-2"></i>Đặt lại bộ lọc</button>
                     </div>
                 </aside>
 
                 <!-- Lecturer Grid -->
                 <div class="col-lg-9">
-                    <div class="row" id="lecturer-container">
-                        <!-- Data will be injected via JS -->
+                    <div class="row g-4" id="lecturer-grid">
+                        <!-- Render động qua JavaScript -->
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Profile Modal -->
-    <div class="modal fade" id="lecturerModal" tabindex="-1">
+    <!-- Profile Modal Chi tiết Giảng viên -->
+    <div class="modal fade id-lecturer-modal" id="lecturerModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0 glass-card">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title fw-bold" id="modal-name">Chi tiết Giảng viên</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4" id="modal-body">
-                    <!-- Dynamic content -->
-                </div>
+            <div class="modal-content" id="modal-lecturer-content">
+                <!-- Nội dung chi tiết load động -->
             </div>
         </div>
     </div>
@@ -93,69 +203,132 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
     <script src="assets/js/main.js"></script>
+
     <script>
-        // Mock Data Validation Matrix (Part 6.3)
+        // DATA MATRIX CHUẨN: Toàn bộ Ban Giám khoa và Trưởng/Phó Bộ môn Khoa CNTT - HUIT
         const lecturers = [
-            { id: 1, name: "Nguyễn Văn A", degree: "TS", dept: "HTTT", img: "https://placehold.co/300x400?text=A", email: "anv@huit.edu.vn", bio: "Chuyên gia HTTT với 15 năm kinh nghiệm." },
-            { id: 2, name: "Trần Thị B", degree: "ThS", dept: "KHMT", img: "https://placehold.co/300x400?text=B", email: "btt@huit.edu.vn", bio: "Giảng dạy các môn về cấu trúc dữ liệu." },
-            { id: 3, name: "Lê Văn C", degree: "TS", dept: "CNPM", img: "https://placehold.co/300x400?text=C", email: "clv@huit.edu.vn", bio: "Nghiên cứu về quy trình phát triển phần mềm." },
-            { id: 4, name: "Phạm Minh D", degree: "PGS", dept: "ANMT", img: "https://placehold.co/300x400?text=D", email: "dpm@huit.edu.vn", bio: "Chuyên gia an ninh mạng và mật mã học." },
-            { id: 5, name: "Hoàng Thị E", degree: "ThS", dept: "HTTT", img: "https://placehold.co/300x400?text=E", email: "eht@huit.edu.vn", bio: "Quản trị cơ sở dữ liệu và Big Data." },
-            { id: 6, name: "Vũ Văn F", degree: "TS", dept: "KHMT", img: "https://placehold.co/300x400?text=F", email: "fvv@huit.edu.vn", bio: "Xử lý ảnh và thị giác máy tính." }
+            { id: 1, name: "ThS. Nguyễn Hiếu Nhu", degree: "ThS", position: "Phó Trưởng khoa phụ trách", dept: "CNPM", email: "nhunh@huit.edu.vn", phone: "(028) 38161673 - Ext: 111", office: "Văn phòng Khoa - Lầu 2 Nhà B", research: "Kiến trúc phần mềm hướng dịch vụ (SOA), Quản lý dự án phần mềm Agile/Scrum", image: "https://placehold.co/300x340?text=ThS+Nguyen+Hieu+Nhu" },
+            { id: 2, name: "ThS. Thân Thị Ngọc Tóc", degree: "ThS", position: "Phó Trưởng khoa", dept: "HTTT", email: "tocttn@huit.edu.vn", phone: "(028) 38161673 - Ext: 112", office: "Văn phòng Khoa - Lầu 2 Nhà B", research: "Hệ quản trị cơ sở dữ liệu lớn (NoSQL), Hoạch định tài nguyên doanh nghiệp ERP", image: "https://placehold.co/300x340?text=ThS+Than+Thi+Ngoc+Toc" },
+            { id: 3, name: "ThS. Phạm An Bình", degree: "ThS", position: "Trưởng Bộ môn", dept: "CNPM", email: "binhpa@huit.edu.vn", phone: "(028) 38161673", office: "Văn phòng Bộ môn CNPM", research: "Thiết kế mẫu (Design Patterns), Lập trình kiểm thử nâng cao, Thiết kế UI/UX", image: "https://placehold.co/300x340?text=ThS+Pham+An+Binh" },
+            { id: 4, name: "ThS. Lê Thành Thanh", degree: "ThS", position: "Phó Trưởng Bộ môn", dept: "CNPM", email: "thanhlt@huit.edu.vn", phone: "(028) 38161673", office: "Văn phòng Bộ môn CNPM", research: "Phát triển hệ thống Web mã nguồn mở, Công nghệ Java/Spring Framework", image: "https://placehold.co/300x340?text=ThS+Le+Thanh+Thanh" },
+            { id: 5, name: "ThS. Nguyễn Võ Thúy Thanh", degree: "ThS", position: "Trưởng Bộ môn", dept: "HTTT", email: "thanhnvt@huit.edu.vn", phone: "(028) 38161673", office: "Văn phòng Bộ môn HTTT", research: "Phân tích và thiết kế hệ thống thông tin, Kho dữ liệu (Data Warehouse)", image: "https://placehold.co/300x340?text=ThS+Nguyen+Vo+Thuy+Thanh" },
+            { id: 6, name: "ThS. Lê Thị Kim Ngân", degree: "ThS", position: "Phó Trưởng Bộ môn", dept: "HTTT", email: "nganltk@huit.edu.vn", phone: "(028) 38161673", office: "Văn phòng Bộ môn HTTT", research: "Hệ thống thông tin quản lý (MIS), Thương mại điện tử và Bảo mật dữ liệu", image: "https://placehold.co/300x340?text=ThS+Le+Thi+Kim+Ngan" },
+            { id: 7, name: "TS. Hoàng Bảo Hùng", degree: "TS", position: "Trưởng Bộ môn", dept: "KHMT", email: "hunghb@huit.edu.vn", phone: "(028) 38161673", office: "Văn phòng Bộ môn KHMT", research: "Trí tuệ nhân tạo (AI), Học máy (Machine Learning), Hệ thống xử lý ngôn ngữ tự nhiên", image: "https://placehold.co/300x340?text=TS+Hoang+Bao+Hung" },
+            { id: 8, name: "TS. Nguyễn Phong Trung", degree: "TS", position: "Phó Trưởng Bộ môn", dept: "KHMT", email: "trungnp@huit.edu.vn", phone: "(028) 38161673", office: "Văn phòng Bộ môn KHMT", research: "Thị giác máy tính (Computer Vision), Xử lý ảnh y khoa, Học sâu đồ thị", image: "https://placehold.co/300x340?text=TS+Nguyen+Phong+Trung" },
+            { id: 9, name: "ThS. Nguyễn Minh Tiến", degree: "ThS", position: "Trưởng Bộ môn", dept: "MMT", email: "tiennm@huit.edu.vn", phone: "(028) 38161673", office: "Văn phòng Bộ môn Mạng", research: "An ninh mạng và mã hóa dữ liệu, Thiết kế kiến trúc mạng doanh nghiệp lớn", image: "https://placehold.co/300x340?text=ThS+Nguyen+Minh+Tien" },
+            { id: 10, name: "ThS. Đặng Lê Bảo Chương", degree: "ThS", position: "Phó Trưởng Bộ môn", dept: "MMT", email: "chuongdlb@huit.edu.vn", phone: "(028) 38161673", office: "Văn phòng Bộ môn Mạng", research: "Điện toán đám mây (Cloud Computing), Giám sát và ứng cứu sự cố hệ thống ATTT", image: "https://placehold.co/300x340?text=ThS+Dang+Le+Bao+Chuong" }
         ];
 
+        const deptNames = {
+            "CNPM": "Công nghệ phần mềm",
+            "HTTT": "Hệ thống thông tin",
+            "KHMT": "Khoa học máy tính",
+            "MMT": "Mạng máy tính & ANTT"
+        };
+
+        // Hàm loại bỏ dấu tiếng Việt chuyên sâu giúp bộ lọc tìm kiếm chính xác (Search Algorithm Enhancement)
+        function removeVietnameseTones(str) {
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+            str = str.replace(/ò|ó|ọ|ỏ|ã|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+            str = str.replace(/ù|á|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+            str = str.replace(/đ/g, "d");
+            str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+            str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+            str = str.replace(/Ì|Í|Ị|ỉ|Ĩ/g, "I");
+            str = str.replace(/Ò|Ó|Ạ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+            str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+            str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+            str = str.replace(/Đ/g, "D");
+            // Loại bỏ các ký tự dấu phụ kết hợp
+            str = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            return str.toLowerCase();
+        }
+
         function renderLecturers(data) {
-            const container = $('#lecturer-container');
-            container.empty();
-            
-            if(data.length === 0) {
-                container.append('<div class="col-12 text-center py-5"><p class="text-muted">Không tìm thấy giảng viên phù hợp.</p></div>');
+            const grid = $('#lecturer-grid');
+            grid.empty();
+
+            if (data.length === 0) {
+                grid.append(`
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-search-minus fa-3x text-muted mb-3"></i>
+                        <p class="text-secondary fw-semibold">Không tìm thấy nhân sự giảng viên phù hợp.</p>
+                    </div>
+                `);
                 return;
             }
 
-            data.forEach((l, index) => {
-                const card = `
-                    <div class="col-md-4 mb-4 lecturer-card reveal" style="transition-delay: ${index * 0.1}s">
-                        <div class="glass-card h-100 overflow-hidden" onclick="showProfile(${l.id})">
-                            <img src="${l.img}" class="card-img-top" alt="${l.name}" style="height: 250px; object-fit: cover;">
-                            <div class="card-body p-3">
-                                <span class="badge bg-primary-subtle text-primary mb-2">${l.degree}</span>
-                                <h6 class="fw-bold mb-1">${l.name}</h6>
-                                <p class="small text-secondary mb-2"><i class="fas fa-building me-1"></i> ${l.dept}</p>
-                                <p class="small text-muted text-truncate mb-0">${l.bio}</p>
+            data.forEach(l => {
+                grid.append(`
+                    <div class="col-md-6 col-lg-4 reveal">
+                        <div class="glass-card lecturer-card h-100 overflow-hidden d-flex flex-column">
+                            <div class="position-relative overflow-hidden" style="height: 250px;">
+                                <img src="${l.image}" alt="${l.name}" class="w-100 h-100 object-fit-cover transition-standard">
+                                <span class="position-absolute bottom-0 start-0 m-3 badge bg-primary border border-light shadow-sm">${deptNames[l.dept]}</span>
+                            </div>
+                            <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="fw-bold mb-1 card-lecturer-title">${l.name}</h5>
+                                    <p class="text-primary small fw-semibold mb-3">${l.position}</p>
+                                    <p class="small text-secondary mb-2"><i class="fas fa-envelope me-2 text-muted"></i>${l.email}</p>
+                                    <p class="small text-secondary mb-0"><i class="fas fa-building me-2 text-muted"></i>${l.office}</p>
+                                </div>
+                                <button class="btn btn-primary btn-sm w-100 mt-4 btn-interactive" onclick="showLecturerDetail(${l.id})">
+                                    <i class="fas fa-info-circle me-1"></i> Xem thông tin
+                                </button>
                             </div>
                         </div>
                     </div>
-                `;
-                container.append(card);
+                `);
             });
-
-            // Re-trigger reveal animations for new elements
-            $('.reveal').addClass('active');
+            // Áp dụng lớp kích hoạt hiệu ứng reveal
+            setTimeout(() => { $('.reveal').addClass('active'); }, 50);
         }
 
-        function showProfile(id) {
+        function showLecturerDetail(id) {
             const l = lecturers.find(item => item.id === id);
-            $('#modal-name').text(`${l.degree}. ${l.name}`);
-            $('#modal-body').html(`
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="${l.img}" class="img-fluid rounded shadow-sm" alt="${l.name}">
-                    </div>
-                    <div class="col-md-8">
-                        <h5 class="fw-bold text-primary mb-3">Thông tin chi tiết</h5>
-                        <p><strong>Bộ môn:</strong> ${l.dept}</p>
-                        <p><strong>Email:</strong> ${l.email}</p>
-                        <p><strong>Tiểu sử:</strong> ${l.bio}</p>
-                        <hr>
-                        <h6 class="fw-bold">Các hướng nghiên cứu chính:</h6>
-                        <ul>
-                            <li>Nghiên cứu ứng dụng trong ${l.dept}</li>
-                            <li>Phát triển hệ thống thông minh</li>
-                            <li>Tối ưu hóa quy trình</li>
-                        </ul>
+            if (!l) return;
+
+            const modalBody = $('#modal-lecturer-content');
+            modalBody.html(`
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 pt-0">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-4 mb-md-0">
+                            <img src="${l.image}" alt="${l.name}" class="img-fluid rounded-3 shadow-sm border border-secondary" style="max-height: 280px; object-fit: cover;">
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="fw-bold mb-1 text-primary">${l.name}</h3>
+                            <p class="text-secondary fw-semibold mb-3">${l.position} - Bộ môn ${deptNames[l.dept]}</p>
+                            
+                            <hr class="border-color my-3" style="opacity:0.15;">
+                            
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <p class="small text-secondary mb-1"><i class="fas fa-id-card me-2 text-primary"></i><strong>Học vị:</strong> ${l.degree === 'TS' ? 'Tiến sĩ' : 'Thạc sĩ'}</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="small text-secondary mb-1"><i class="fas fa-envelope me-2 text-primary"></i><strong>Email:</strong> ${l.email}</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="small text-secondary mb-1"><i class="fas fa-phone me-2 text-primary"></i><strong>Điện thoại:</strong> ${l.phone}</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="small text-secondary mb-1"><i class="fas fa-map-marker-alt me-2 text-primary"></i><strong>Văn phòng:</strong> ${l.office}</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 p-3 rounded-3" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color);">
+                                <h6 class="fw-bold text-primary mb-2"><i class="fas fa-flask me-2"></i>Hướng nghiên cứu chuyên sâu:</h6>
+                                <p class="small text-secondary mb-0" style="line-height:1.6;">${l.research}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `);
@@ -164,14 +337,18 @@
         }
 
         function applyFilters() {
-            const searchText = $('#lecturer-search').val().toLowerCase();
+            const searchText = removeVietnameseTones($('#lecturer-search').val());
             const degree = $('#filter-degree').val();
             const selectedDepts = $('.filter-dept:checked').map(function() { return this.value; }).get();
 
             const filtered = lecturers.filter(l => {
-                const matchesSearch = l.name.toLowerCase().includes(searchText);
+                const targetName = removeVietnameseTones(l.name);
+                const targetPosition = removeVietnameseTones(l.position);
+                const matchesSearch = targetName.includes(searchText) || targetPosition.includes(searchText);
+                
                 const matchesDegree = degree === 'all' || l.degree === degree;
                 const matchesDept = selectedDepts.includes(l.dept);
+                
                 return matchesSearch && matchesDegree && matchesDept;
             });
 
@@ -179,9 +356,10 @@
         }
 
         $(document).ready(function() {
+            // Khởi tạo render lần đầu
             renderLecturers(lecturers);
 
-            // Live Search (Part 3.3)
+            // Gán các sự kiện tương tác
             $('#lecturer-search').on('keyup', applyFilters);
             $('.filter-dept').on('change', applyFilters);
             $('#filter-degree').on('change', applyFilters);
@@ -195,4 +373,3 @@
         });
     </script>
 </body>
-</html>

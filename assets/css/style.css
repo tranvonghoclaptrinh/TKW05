@@ -3,6 +3,105 @@
    Responsive layout, motion effects, and light/dark mode
 */
 
+    /* ==========================================================================
+       HEADER LIGHT/DARK INTEGRATION & SEARCH COMPONENT FIX
+       ========================================================================== */
+    .custom-navbar {
+        background: var(--glass-bg) !important;
+        border-bottom: 1px solid var(--glass-border) !important;
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur);
+        transition: var(--transition-standard);
+    }
+
+    .custom-navbar .nav-link {
+        color: var(--text-main) !important;
+        font-weight: 500;
+        transition: var(--transition-standard);
+    }
+
+    .custom-navbar .nav-link:hover,
+    .custom-navbar .nav-link.active {
+        color: var(--primary-color) !important;
+    }
+
+    .custom-navbar .navbar-brand-title {
+        color: var(--primary-color);
+        transition: var(--transition-standard);
+    }
+
+    .custom-navbar .navbar-brand-subtitle {
+        color: var(--text-secondary);
+    }
+
+    .custom-navbar .navbar-toggler-icon {
+        filter: var(--menu-toggler-filter, none);
+    }
+
+    /* --------------------------------------------------------------------------
+       FIXED: FIXING SEARCH INPUT & BUTTON FOR LIGHT/DARK MODE
+       -------------------------------------------------------------------------- */
+    /* Khối ô nhập dữ liệu tìm kiếm */
+    .custom-search-form .header-search-input {
+        background: rgba(0, 0, 0, 0.04) !important;
+        border: 1px solid var(--border-color) !important;
+        color: var(--text-main) !important;
+        font-size: 0.9rem;
+        transition: var(--transition-standard);
+    }
+
+    /* Xử lý dải chữ placeholder gợi ý theo chế độ màu */
+    .custom-search-form .header-search-input::placeholder {
+        color: var(--text-secondary) !important;
+        opacity: 0.7;
+    }
+
+    .custom-search-form .header-search-input:focus {
+        background: var(--surface-color) !important;
+        border-color: var(--primary-color) !important;
+        box-shadow: 0 0 0 3px var(--primary-light) !important;
+        color: var(--text-main) !important;
+    }
+
+    /* Khối nút bấm kính lúp tìm kiếm */
+    .custom-search-form .header-search-btn {
+        background: transparent !important;
+        border: 1px solid var(--border-color) !important;
+        border-left: none !important; /* Triệt tiêu viền trùng với ô input */
+        color: var(--text-secondary) !important;
+        transition: var(--transition-standard);
+    }
+
+    .custom-search-form .header-search-btn:hover {
+        background: var(--primary-color) !important;
+        border-color: var(--primary-color) !important;
+        color: #ffffff !important;
+    }
+
+    /* --------------------------------------------------------------------------
+       DARK MODE OVERRIDES SPECIFIC FOR SEARCH MODULE
+       -------------------------------------------------------------------------- */
+    [data-theme="dark"] .custom-navbar {
+        --menu-toggler-filter: invert(1);
+    }
+
+    [data-theme="dark"] .custom-search-form .header-search-input {
+        background: rgba(255, 255, 255, 0.06) !important;
+        border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    [data-theme="dark"] .custom-search-form .header-search-btn {
+        border-color: rgba(255, 255, 255, 0.15) !important;
+        border-left: none !important;
+        color: var(--primary-color) !important; /* Đổi icon kính lúp sang xanh neon trong đêm */
+    }
+
+    [data-theme="dark"] .custom-search-form .header-search-btn:hover {
+        background: var(--primary-color) !important;
+        color: #061224 !important; /* Đổi chữ/icon thành màu tối sâu khi hover nút trong Dark Mode */
+    }
+
+
 :root {
     --primary-color: #034EA2;
     --primary-soft: #2073B7;
@@ -905,6 +1004,70 @@ footer .text-white-50 {
 
 footer hr {
     border-color: var(--border-color);
+}
+
+.custom-footer {
+    background: var(--bg-secondary) !important;
+    border-top: 1px solid var(--border-color);
+    transition: var(--transition-standard);
+}
+
+.footer-title {
+    color: var(--primary-color) !important;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.footer-text {
+    color: var(--text-secondary) !important;
+    font-size: 0.92rem;
+}
+
+.footer-icon {
+    color: var(--primary-soft);
+}
+
+.footer-link {
+    color: var(--text-secondary) !important;
+    font-size: 0.92rem;
+    transition: var(--transition-standard);
+}
+
+.footer-link:hover {
+    color: var(--primary-color) !important;
+    padding-left: 4px;
+}
+
+.footer-divider {
+    color: var(--border-color);
+    opacity: 1;
+}
+
+.footer-map-box {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--glass-bg);
+}
+
+.footer-map-box iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.footer-icon-link {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    transition: var(--transition-standard);
+}
+
+.footer-icon-link:hover {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .custom-footer {
+    background: rgba(10, 25, 47, 0.4) !important;
+    border-top-color: var(--glass-border);
 }
 
 @media (max-width: 1199px) {

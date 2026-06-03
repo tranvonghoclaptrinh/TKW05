@@ -7,7 +7,7 @@
                 <span class="navbar-brand-subtitle d-block small">ĐẠI HỌC CÔNG THƯƠNG TP.HCM</span>
             </span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Mở menu điều hướng">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="#navbarNav" aria-expanded="false" aria-label="Mở menu điều hướng">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -24,8 +24,13 @@
                     </button>
                 </li>
             </ul>
-            <form class="d-flex ms-lg-3 mt-3 mt-lg-0" role="search">
-                <input class="form-control rounded-pill" type="search" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+            <form class="d-flex ms-lg-3 mt-3 mt-lg-0 custom-search-form" role="search">
+                <div class="input-group">
+                    <input class="form-control header-search-input" type="search" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+                    <button class="btn header-search-btn btn-interactive" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
             </form>
         </div>
     </div>

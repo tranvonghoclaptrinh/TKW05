@@ -7,11 +7,83 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        /* ==========================================================================
+           OPTIMIZED: CONTACT MODULE (GLASSMORPHIC & THEME INTEGRATION)
+           ========================================================================== */
+
+        /* 1. Tối ưu cấu trúc Form Input & Textarea */
+        .id-contact-section .form-control {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-main) !important;
+            border-radius: 8px;
+            transition: var(--transition-standard);
+        }
+
+        .id-contact-section .form-control:focus {
+            background-color: var(--surface-color) !important;
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 3px var(--primary-light) !important;
+        }
+
+        .id-contact-section .form-control::placeholder {
+            color: var(--text-secondary) !important;
+            opacity: 0.6;
+        }
+
+        /* 2. Chuẩn hóa Khối Icon Thông tin (Contact Info Icons) */
+        .id-contact-section .info-icon-box {
+            width: 50px; 
+            height: 50px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            background: var(--primary-light) !important;
+            color: var(--primary-color) !important;
+            transition: var(--transition-standard);
+        }
+
+        /* 3. Tối ưu khung bản đồ nhúng (Responsive Map Container) */
+        .id-contact-section .map-container {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background: var(--glass-bg);
+        }
+
+        /* ==========================================================================
+           SPECIFIC DARK MODE REFINE (Kích hoạt tự động qua data-theme="dark")
+           ========================================================================== */
+        [data-theme="dark"] .id-contact-section {
+            --custom-neon: #00d2ff;
+        }
+
+        [data-theme="dark"] .id-contact-section h1,
+        [data-theme="dark"] .id-contact-section h4,
+        [data-theme="dark"] .id-contact-section .text-primary {
+            color: var(--custom-neon) !important;
+        }
+
+        [data-theme="dark"] .id-contact-section .info-icon-box {
+            background: rgba(0, 210, 255, 0.15) !important;
+            color: var(--custom-neon) !important;
+        }
+
+        /* Đồng bộ Toast thông báo thành công trong Dark Mode */
+        .toast-container .toast {
+            background: var(--glass-bg) !important;
+            backdrop-filter: var(--glass-blur) !important;
+            border: 1px solid var(--glass-border) !important;
+            color: var(--text-main) !important;
+        }
+    </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
 
-    <main class="py-5">
+    <main class="py-5 id-contact-section">
         <div class="container">
             <h1 class="fw-bold mb-5 reveal text-center">Liên hệ với chúng tôi</h1>
 
@@ -19,71 +91,90 @@
                 <div class="col-lg-5 mb-4 reveal">
                     <div class="glass-card p-4 h-100">
                         <h4 class="fw-bold mb-4">Thông tin liên hệ</h4>
-                        <div class="d-flex mb-3">
-                            <div class="bg-primary-subtle text-primary rounded-circle p-3 me-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                        
+                        <div class="d-flex mb-3 align-items-start">
+                            <div class="rounded-circle info-icon-box p-3 me-3 flex-shrink-0">
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div>
-                                <h6 class="fw-bold mb-1">Địa chỉ</h6>
-                                <p class="small text-secondary mb-0">140 Lê Trọng Tấn, P. Tây Thạnh, Q. Tân Phú, TP.HCM</p>
+                                <h6 class="fw-bold mb-1">Địa chỉ văn phòng</h6>
+                                <p class="small text-secondary mb-0">Phòng B.202, Lầu 2, Nhà B - 140 Lê Trọng Tấn, Phường Tây Thạnh, Quận Tân Phú, TP. HCM</p>
                             </div>
                         </div>
-                        <div class="d-flex mb-3">
-                            <div class="bg-success-subtle text-success rounded-circle p-3 me-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+
+                        <div class="d-flex mb-3 align-items-start">
+                            <div class="rounded-circle info-icon-box p-3 me-3 flex-shrink-0">
                                 <i class="fas fa-phone"></i>
                             </div>
                             <div>
-                                <h6 class="fw-bold mb-1">Điện thoại</h6>
-                                <p class="small text-secondary mb-0">(028) 38161673 - Ext: 123</p>
+                                <h6 class="fw-bold mb-1">Điện thoại di động / Tổng đài</h6>
+                                <p class="small text-secondary mb-0">(028) 38161673 - Line nội bộ: 124 (Văn phòng Khoa CNTT)</p>
                             </div>
                         </div>
-                        <div class="d-flex mb-3">
-                            <div class="bg-info-subtle text-info rounded-circle p-3 me-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+
+                        <div class="d-flex mb-3 align-items-start">
+                            <div class="rounded-circle info-icon-box p-3 me-3 flex-shrink-0">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div>
-                                <h6 class="fw-bold mb-1">Email</h6>
+                                <h6 class="fw-bold mb-1">Địa chỉ Email liên hệ</h6>
                                 <p class="small text-secondary mb-0">kcntt@huit.edu.vn</p>
                             </div>
                         </div>
-                        
-                        <hr class="my-4">
-                        <h6 class="fw-bold mb-3">Mạng xã hội</h6>
-                        <div class="d-flex">
-                            <a href="#" class="btn btn-outline-primary rounded-circle me-2 btn-interactive"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="btn btn-outline-danger rounded-circle me-2 btn-interactive"><i class="fab fa-youtube"></i></a>
-                            <a href="#" class="btn btn-outline-info rounded-circle me-2 btn-interactive"><i class="fab fa-linkedin-in"></i></a>
+
+                        <div class="d-flex mb-4 align-items-start">
+                            <div class="rounded-circle info-icon-box p-3 me-3 flex-shrink-0">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1">Thời gian làm việc hành chính</h6>
+                                <p class="small text-secondary mb-0">Thứ Hai - Thứ Sáu: Từ 07:30 đến 11:30 & 13:30 đến 16:30<br>Thứ Bảy: Từ 07:30 đến 11:30 (Trực văn phòng)</p>
+                            </div>
+                        </div>
+
+                        <div class="map-container w-100" style="height: 230px;">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.2942948197775!2d106.61528657590547!3d10.788753258965935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752c10b2df7b09%3A0xb6ca2d46e386926f!2zMTQwIEzDqiBUcuG7峮bmcgVOG6pW4sIFTDonkgVGjhuqFuaCwgVMOibiBQaMO6LCBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1714000000000!5m2!1svi!2s" 
+                                class="w-100 h-100 border-0" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-7 mb-4 reveal" style="transition-delay: 0.2s;">
-                    <div class="glass-card p-4">
-                        <h4 class="fw-bold mb-4">Gửi tin nhắn cho chúng tôi</h4>
+                <div class="col-lg-7 mb-4 reveal">
+                    <div class="glass-card p-4 h-100">
+                        <h4 class="fw-bold mb-4">Gửi tin nhắn phản hồi</h4>
                         <form id="contact-form">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label small fw-bold">Họ và tên</label>
-                                    <input type="text" class="form-control" id="name" required>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-semibold">Họ và tên <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="contact-name" placeholder="Nhập họ và tên..." required>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label small fw-bold">Email</label>
-                                    <input type="email" class="form-control" id="email" required>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-semibold">Địa chỉ Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="contact-email" placeholder="name@example.com" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-semibold">Số điện thoại</label>
+                                    <input type="tel" class="form-control" id="contact-phone" placeholder="Nhập số điện thoại...">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small fw-semibold">Tiêu đề liên hệ <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="contact-subject" placeholder="Nhập tiêu đề thư..." required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-semibold">Nội dung tin nhắn <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="contact-message" rows="5" placeholder="Nhập nội dung chi tiết cần phản hồi hoặc hỗ trợ..." required></textarea>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-primary w-100 py-2 btn-interactive">
+                                        <i class="fas fa-paper-plane me-2"></i> Gửi tin nhắn liên hệ
+                                    </button>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label small fw-bold">Số điện thoại</label>
-                                <input type="tel" class="form-control" id="phone" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label small fw-bold">Tiêu đề</label>
-                                <input type="text" class="form-control" id="subject" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label small fw-bold">Nội dung</label>
-                                <textarea class="form-control" id="message" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 btn-interactive">Gửi tin nhắn</button>
                         </form>
                     </div>
                 </div>
@@ -91,14 +182,14 @@
         </div>
     </main>
 
-    <!-- Toast Notification -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1050;">
+        <div id="successToast" class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
-                <div class="toast-body">
-                    <i class="fas fa-check-circle me-2"></i> Cảm ơn bạn! Tin nhắn đã được gửi thành công.
+                <div class="toast-body d-flex align-items-center">
+                    <i class="fas fa-check-circle text-success fs-5 me-2"></i>
+                    <span>Gửi thông tin liên hệ thành công! Chúng tôi sẽ phản hồi trong 24h làm việc.</span>
                 </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>
@@ -107,49 +198,37 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="assets/js/main.js"></script>
-    <script>
+
+    <script type="text/javascript">
+        (function() {
+            // Khởi tạo mã định danh EmailJS của bạn (Thay thế bằng USER_ID thực tế)
+            emailjs.init("YOUR_USER_ID");
+        })();
+
         $(document).ready(function() {
+            // Kích hoạt animation reveal khi load trang hoàn tất
+            setTimeout(() => { $('.reveal').addClass('active'); }, 50);
+
+            // Xử lý luồng gửi Form dữ liệu liên hệ (Submit Form Logic)
             $('#contact-form').on('submit', function(e) {
                 e.preventDefault();
-                
-                // Basic Validation
-                const name = $('#name').val().trim();
-                const email = $('#email').val().trim();
-                const phone = $('#phone').val().trim();
-                const subject = $('#subject').val().trim();
-                const message = $('#message').val().trim();
-                
+
+                const name = $('#contact-name').val().trim();
+                const email = $('#contact-email').val().trim();
+                const phone = $('#contact-phone').val().trim();
+                const subject = $('#contact-subject').val().trim();
+                const message = $('#contact-message').val().trim();
+
+                // Kiểm thử hộp kiểm bảo vệ phía Client (Regex Pattern Validation Guard)
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                const phoneRegex = /^[0-9]{10,11}$/;
-
-                if (!name) {
-                    alert('Vui lòng nhập họ và tên!');
-                    return;
-                }
-
                 if (!emailRegex.test(email)) {
-                    alert('Vui lòng nhập email hợp lệ!');
+                    alert('Định dạng Email không hợp lệ. Vui lòng kiểm tra lại!');
                     return;
                 }
 
-                if (!phoneRegex.test(phone)) {
-                    alert('Số điện thoại phải có từ 10-11 chữ số!');
-                    return;
-                }
-
-                if (!subject) {
-                    alert('Vui lòng nhập tiêu đề!');
-                    return;
-                }
-
-                if (!message) {
-                    alert('Vui lòng nhập nội dung tin nhắn!');
-                    return;
-                }
-
-                // Send email using EmailJS
+                // Thiết lập tham số chuyển phát thư điện tử thông qua SDK
                 const templateParams = {
                     to_email: 'kcntt@huit.edu.vn',
                     from_name: name,
@@ -159,22 +238,28 @@
                     message: message
                 };
 
-                // Show loading state
+                // Trạng thái chờ xử lý luồng sự kiện (Loading State Management)
                 const submitBtn = $(this).find('button[type="submit"]');
-                const originalText = submitBtn.text();
-                submitBtn.prop('disabled', true).text('Đang gửi...');
+                const originalText = submitBtn.html();
+                submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i> Đang truyền dữ liệu...');
 
+                // Thực thi lệnh truyền phát thông điệp EmailJS
                 emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
                     .then(function(response) {
-                        console.log('Email sent successfully!', response.status, response.text);
-                        const toast = new bootstrap.Toast(document.getElementById('successToast'));
+                        console.log('EmailJS Matrix Success:', response.status, response.text);
+                        
+                        // Kích hoạt hiển thị Toast thông báo thành công chuẩn Bootstrap 5
+                        const toastElement = document.getElementById('successToast');
+                        const toast = new bootstrap.Toast(toastElement);
                         toast.show();
+                        
+                        // Xóa sạch trạng thái form dữ liệu nhập
                         $('#contact-form')[0].reset();
-                        submitBtn.prop('disabled', false).text(originalText);
+                        submitBtn.prop('disabled', false).html(originalText);
                     }, function(error) {
-                        console.log('Failed to send email:', error);
-                        alert('Có lỗi xảy ra khi gửi email. Vui lòng thử lại sau.');
-                        submitBtn.prop('disabled', false).text(originalText);
+                        console.error('EmailJS Connection Error:', error);
+                        alert('Hệ thống truyền tải gián đoạn. Vui lòng gửi email trực tiếp đến kcntt@huit.edu.vn!');
+                        submitBtn.prop('disabled', false).html(originalText);
                     });
             });
         });
