@@ -8,6 +8,146 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+<style>
+    /* ==========================================================================
+   REFRACTOR: INTERACTIVE SO LE TIMELINE WITH GLASSMORPHISM STYLE
+   ========================================================================== */
+
+/* 1. Thiết lập trục dọc chính giữa trang */
+.timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    background: linear-gradient(to bottom, #0d6efd, #B9DCFF, #061224);
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+/* 2. Cấu trúc các khối item bao ngoài */
+.timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Các item bên phải sẽ đổi hướng dạt sang phải */
+.timeline-item.timeline-right {
+    left: 50%;
+    justify-content: flex-start;
+}
+
+/* 3. Thiết kế hộp nội dung dạng Glassmorphism cao cấp */
+.timeline-panel {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05) !important;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Hiệu ứng phóng nhẹ và đổi màu viền khi di chuột vào */
+.timeline-panel:hover {
+    transform: translateY(-5px);
+    border-color: #0d6efd !important;
+    box-shadow: 0 12px 40px 0 rgba(13, 110, 253, 0.15) !important;
+}
+
+/* 4. Tạo các mũi tên chỉ vào trục thời gian */
+.timeline-panel::before {
+    content: "";
+    position: absolute;
+    top: 28px;
+    right: -10px;
+    border-width: 10px 0 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent transparent rgba(255, 255, 255, 0.8);
+}
+
+.timeline-item.timeline-right .timeline-panel::before {
+    left: -10px;
+    right: auto;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent rgba(255, 255, 255, 0.8) transparent transparent;
+}
+
+/* 5. Thiết kế nút thắt Icon (Badge) nằm chèn lên trục giữa */
+.timeline-badge {
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    position: absolute;
+    top: 16px;
+    right: -22px;
+    z-index: 10;
+    background-color: #ffffff;
+    border: 3px solid #0d6efd;
+    color: #0d6efd;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 0.95rem;
+    box-shadow: 0 0 0 4px #B9DCFF;
+    transition: all 0.3s ease;
+}
+
+.timeline-item.timeline-right .timeline-badge {
+    left: -22px;
+    right: auto;
+}
+
+/* Đổi màu nút thắt khi hover vào panel */
+.timeline-item:hover .timeline-badge {
+    background-color: #0d6efd;
+    color: #ffffff;
+    transform: scale(1.1);
+    box-shadow: 0 0 0 6px rgba(13, 110, 253, 0.25);
+}
+
+/* 6. Đảm bảo hiển thị Responsive mượt mà trên Mobile (Phá vỡ thế so le để dồn về 1 trục dọc bên trái) */
+@media (max-width: 767.98px) {
+    .timeline::before {
+        left: 20px;
+    }
+    
+    .timeline-item {
+        width: 100% !important;
+        left: 0 !important;
+        padding-left: 50px;
+        padding-right: 0;
+        justify-content: flex-start !important;
+    }
+    
+    .timeline-badge {
+        left: -2px !important;
+        right: auto !important;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        font-size: 0.85rem;
+    }
+    
+    .timeline-panel::before {
+        left: -10px !important;
+        right: auto !important;
+        border-width: 10px 10px 10px 0 !important;
+        border-color: transparent rgba(255, 255, 255, 0.8) transparent transparent !important;
+    }
+}
+</style>
 <body>
     <div id="header-placeholder"></div>
 
@@ -29,32 +169,47 @@
                     <p>Tầm nhìn đến năm 2030, Khoa sẽ trở thành trung tâm đào tạo và nghiên cứu khoa học ứng dụng hàng đầu trong khu vực, gắn liền với thực tiễn sản xuất và dịch vụ.</p>
                 </div>
                 <div class="col-lg-6 reveal" style="transition-delay: 0.2s;">
-                    <img src="https://placehold.co/600x400?text=Faculty+Image" alt="Faculty" class="img-fluid rounded-4 shadow">
+                    <img src="https://huit.edu.vn/images/vien-chuc/bgd-dt.jpg" alt="Faculty" class="img-fluid rounded-4 shadow">
                 </div>
             </div>
 
-            <!-- Timeline Section -->
-            <section class="mb-5 py-5">
-                <h2 class="fw-bold mb-4 reveal text-center">Lịch sử phát triển</h2>
-                <div class="timeline mx-auto" style="max-width: 800px;">
-                    <div class="timeline-item reveal">
-                        <h5 class="fw-bold text-primary">Năm 2010</h5>
-                        <p>Thành lập Khoa Công nghệ Thông tin trên cơ sở Bộ môn Tin học.</p>
-                    </div>
-                    <div class="timeline-item reveal">
-                        <h5 class="fw-bold text-primary">Năm 2015</h5>
-                        <p>Mở rộng quy mô đào tạo với 3 chuyên ngành: Hệ thống thông tin, Công nghệ phần mềm, và Khoa học máy tính.</p>
-                    </div>
-                    <div class="timeline-item reveal">
-                        <h5 class="fw-bold text-primary">Năm 2020</h5>
-                        <p>Đạt chuẩn kiểm định chất lượng chương trình đào tạo theo tiêu chuẩn AUN-QA.</p>
-                    </div>
-                    <div class="timeline-item reveal">
-                        <h5 class="fw-bold text-primary">Hiện tại</h5>
-                        <p>Đang đào tạo hơn 5000 sinh viên với đội ngũ giảng viên trình độ cao.</p>
-                    </div>
-                </div>
-            </section>
+            <section class="mb-5 py-5 position-relative overflow-hidden">
+    <h2 class="fw-bold mb-5 reveal text-center">Lịch sử phát triển</h2>
+    
+    <div class="timeline mx-auto position-relative" style="max-width: 900px;">
+        <div class="timeline-item timeline-left reveal">
+            <div class="timeline-badge"><i class="fas fa-flag"></i></div>
+            <div class="timeline-panel glass-card p-4">
+                <h5 class="fw-bold text-primary mb-2">Năm 2010</h5>
+                <p class="mb-0 text-secondary">Thành lập Khoa Công nghệ Thông tin trên cơ sở Bộ môn Tin học.</p>
+            </div>
+        </div>
+
+        <div class="timeline-item timeline-right reveal">
+            <div class="timeline-badge"><i class="fas fa-graduation-cap"></i></div>
+            <div class="timeline-panel glass-card p-4">
+                <h5 class="fw-bold text-primary mb-2">Năm 2015</h5>
+                <p class="mb-0 text-secondary">Mở rộng quy mô đào tạo với 3 chuyên ngành: Hệ thống thông tin, Công nghệ phần mềm, và Khoa học máy tính.</p>
+            </div>
+        </div>
+
+        <div class="timeline-item timeline-left reveal">
+            <div class="timeline-badge"><i class="fas fa-award"></i></div>
+            <div class="timeline-panel glass-card p-4">
+                <h5 class="fw-bold text-primary mb-2">Năm 2020</h5>
+                <p class="mb-0 text-secondary">Đạt chuẩn kiểm định chất lượng chương trình đào tạo theo tiêu chuẩn AUN-QA.</p>
+            </div>
+        </div>
+
+        <div class="timeline-item timeline-right reveal">
+            <div class="timeline-badge"><i class="fas fa-chart-line"></i></div>
+            <div class="timeline-panel glass-card p-4">
+                <h5 class="fw-bold text-primary mb-2">Hiện tại</h5>
+                <p class="mb-0 text-secondary">Đang đào tạo hơn 5000 sinh viên với đội ngũ giảng viên trình độ cao.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
             <!-- Leadership Section -->
             <section class="mb-5">

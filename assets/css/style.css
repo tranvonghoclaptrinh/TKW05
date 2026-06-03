@@ -42,7 +42,9 @@ html,
 body {
     scroll-behavior: smooth;
 }
-
+body {
+    padding-top: 76px !important; /* Bằng đúng chiều cao thực tế của thanh điều hướng HUIT */
+}
 body {
     min-width: 320px;
     color: var(--text-main);
@@ -200,9 +202,49 @@ img {
     filter: invert(1);
 }
 
+/* ==========================================================================
+   REFRACTORED: Grid Menu Navigation (Chia ô cho các nút điều hướng)
+   ========================================================================== */
+
+/* Thiết lập cấu trúc bao ngoài trên Desktop */
+@media (min-width: 992px) {
+    .navbar-nav {
+        align-items: stretch !important; /* Ép các li (nav-item) có chiều cao bằng nhau */
+        height: 100%;
+    }
+
+    .navbar-nav .nav-item {
+        display: flex;
+        align-items: center;
+        border-right: 1px solid var(--border-color); /* Sử dụng biến hệ thống của bạn */
+        transition: var(--transition-standard);
+    }
+
+    /* Thêm border bên trái cho ô đầu tiên để khép kín khối nếu muốn */
+    .navbar-nav .nav-item:first-child {
+        border-left: 1px solid var(--border-color);
+    }
+
+    /* Khử border bên phải của ô danh mục cuối cùng đứng trước ô chứa nút Theme */
+    .navbar-nav .nav-item:has(+ .nav-item .theme-toggle-btn),
+    .navbar-nav .nav-item:nth-last-child(2) {
+        border-right: none;
+    }
+
+    /* Hiệu ứng hover bừng sáng cả ô */
+    .navbar-nav .nav-item:not(:last-child):hover {
+        background-color: rgba(var(--primary-color-rgb, 0, 102, 204), 0.05);
+    }
+}
+
+/* Kiểu dáng cho các liên kết liên kết */
 .nav-link {
     color: var(--text-main) !important;
     font-weight: 600;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    width: 100%;
+    text-align: center;
     transition: var(--transition-standard);
 }
 
@@ -211,20 +253,63 @@ img {
     color: var(--primary-color) !important;
 }
 
-.nav-link.active {
-    position: relative;
+/* Thay đổi logic Active State từ gạch chân cụm từ sang highlight khối hoặc border dưới */
+@media (min-width: 992px) {
+    .nav-link.active {
+        position: relative;
+        background-color: rgba(var(--primary-color-rgb, 0, 102, 204), 0.03);
+    }
+
+    /* Kéo dài thanh underline phủ kín đáy ô thay vì co ngắn như cũ */
+    .nav-link.active::after {
+        position: absolute;
+        right: 0;
+        bottom: -1px; /* Khớp với border-bottom của navbar */
+        left: 0;
+        height: 3px;
+        background-color: var(--primary-color);
+        content: "";
+    }
 }
 
-.nav-link.active::after {
-    position: absolute;
-    right: 0.75rem;
-    bottom: 0.2rem;
-    left: 0.75rem;
-    height: 2px;
-    background-color: var(--primary-color);
-    content: "";
+/* Cấu trúc chia ô khi Responsive trên Mobile/Tablet (< 992px) */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        width: 100%;
+        margin-top: 1rem;
+        align-items: stretch !important;
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    /* Ô chứa nút Toggle Theme trên mobile */
+    .navbar-nav .nav-item:last-child {
+        border-bottom: none;
+        padding: 1rem 0;
+        justify-content: center;
+    }
+
+    .nav-link {
+        text-align: left;
+        padding: 0.75rem 1rem !important;
+    }
+
+    /* Khử thanh gạch chân không phù hợp trên Mobile Layout */
+    .nav-link.active::after {
+        display: none;
+    }
+    
+    .nav-link.active {
+        border-left: 4px solid var(--primary-color);
+        padding-left: 0.75rem !important;
+        background-color: rgba(var(--primary-color-rgb, 0, 102, 204), 0.05);
+    }
 }
 
+/* Cấu hình nút Theme Toggle nguyên bản */
 .theme-toggle-btn {
     display: inline-flex;
     width: 44px;
@@ -244,20 +329,55 @@ img {
     transform: translateY(-2px) rotate(8deg);
     background-color: var(--primary-soft);
 }
+/* ==========================================================================
+   FIXED HERO: RENDER LAYER & INTERACTION COMPATIBILITY
+   ========================================================================== */
 
-/* Hero */
 .hero-carousel {
     background-color: #061224;
+    position: relative;
 }
 
 .hero-slide {
+    position: relative;
     min-height: clamp(560px, 78vh, 760px);
-    background:
-        linear-gradient(90deg, rgba(3, 25, 55, 0.88), rgba(3, 25, 55, 0.56), rgba(3, 25, 55, 0.18)),
-        var(--hero-image) center / cover no-repeat;
+    overflow: hidden;
 }
 
+/* Thẻ ảnh vật lý - Khóa chết tọa độ tuyệt đối dưới đáy */
+.hero-slide .hero-bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    z-index: 1;
+    pointer-events: none; /* Khử chặn sự kiện chuột */
+}
+
+/* Lớp phủ màu xanh dương nhạt hệ thống */
+.hero-slide .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        rgba(3, 25, 55, 0.94) 0%,   
+        rgba(15, 76, 129, 0.65) 50%, 
+        rgba(3, 25, 55, 0.35) 100%  
+    );
+    z-index: 2;
+    pointer-events: none; /* GIẢI PHÁP CHÍ MẠNG: Cho phép chuột lướt xuyên qua lớp kính màu */
+}
+
+/* Nội dung hiển thị */
 .hero-content {
+    position: relative;
+    z-index: 3;
     display: flex;
     min-height: clamp(560px, 78vh, 760px);
     max-width: 980px;
@@ -278,6 +398,7 @@ img {
     font-size: clamp(2.25rem, 6vw, 5rem);
     font-weight: 900;
     line-height: 1.04;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content p {
@@ -286,12 +407,15 @@ img {
     color: rgba(255, 255, 255, 0.86);
     font-size: clamp(1rem, 2vw, 1.25rem);
     line-height: 1.7;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
 }
 
 .hero-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
+    position: relative;
+    z-index: 4; /* Đẩy các nút tương tác lên cao nhất */
 }
 
 .hero-actions .btn {
@@ -305,8 +429,25 @@ img {
     height: 4px;
     border: 0;
     border-radius: 999px;
+    z-index: 5;
 }
 
+@media (max-width: 575.98px) {
+    .hero-slide .hero-bg-img {
+        object-position: 75% center;
+    }
+    .hero-content {
+        text-align: center;
+        align-items: center;
+    }
+    .hero-actions {
+        justify-content: center;
+        width: 100%;
+    }
+    .hero-actions .btn {
+        width: 100%;
+    }
+}
 /* Stats */
 .stats-section {
     margin-top: -48px;
@@ -450,6 +591,7 @@ img {
     padding: 0;
     border-radius: 8px;
     box-shadow: 0 24px 50px var(--shadow-color);
+    overflow: hidden; /* THÊM: Cắt góc ruy-băng thừa khi xoay 45 độ */
 }
 
 .news-feature img {
@@ -459,6 +601,37 @@ img {
     object-fit: cover;
 }
 
+/* ==========================================================================
+   INTEGRATED: Top-Right Diagonal Ribbon Component
+   ========================================================================== */
+.ribbon-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 135px;
+    height: 135px;
+    overflow: hidden;
+    z-index: 5; /* Nằm trên lớp img và lớp .news-overlay (z-index: 2) */
+    pointer-events: none; /* Không cản trở tương tác chuột vào card */
+}
+
+.ribbon-badge {
+    position: absolute;
+    top: 25px;
+    right: -38px;
+    width: 185px;
+    transform: rotate(45deg); /* Xoay chéo góc chuẩn */
+    text-align: center;
+    padding: 5px 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    color: #fff;
+}
+
+/* Tối ưu hóa Z-Index cho Lớp phủ nội dung để không che mất Ribbon */
 .news-overlay {
     position: absolute;
     inset: 0;
@@ -468,6 +641,7 @@ img {
     padding: 28px;
     color: #fff;
     background: linear-gradient(180deg, transparent 35%, rgba(3, 17, 36, 0.88));
+    z-index: 2; /* Đảm bảo lớp phủ nằm dưới lớp Ribbon wrapper */
 }
 
 .news-overlay h3 {
@@ -515,7 +689,6 @@ img {
     object-fit: cover;
     border-radius: 8px;
 }
-
 /* Reveal and motion */
 .reveal {
     opacity: 0;
