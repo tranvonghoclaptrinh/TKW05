@@ -77,6 +77,48 @@
         border-color: var(--primary-color) !important;
         color: #ffffff !important;
     }
+/* ==========================================================================
+   FIXED: DỊCH CHUYỂN THEME TOGGLE RA NGOÀI CÙNG BÊN PHẢI (DESKTOP)
+   ========================================================================== */
+@media (min-width: 992px) {
+    /* Ép container của navbar-collapse thành Flexbox để điều khiển thứ tự */
+    .navbar-collapse {
+        display: flex !important;
+        align-items: center;
+    }
+
+    /* Đẩy toàn bộ menu và form tìm kiếm sang trái, nhường chỗ cho nút Theme */
+    .custom-nav-grid {
+        margin-left: auto !important; /* Đẩy menu ra xa khỏi logo */
+        margin-right: 0 !important;
+    }
+
+    /* Đảm bảo nút Theme luôn nằm ở cuối cùng */
+    .theme-item {
+        order: 99; /* Đẩy xuống cuối danh sách */
+        margin-left: 20px !important; /* Khoảng cách giữa Search và nút Theme */
+    }
+}
+
+/* ==========================================================================
+   MOBILE & TABLET: BẢO TOÀN RESPONSIVE
+   ========================================================================== */
+@media (max-width: 991.98px) {
+    /* Trên di động, giữ nguyên bố cục dọc của Bootstrap */
+    .theme-item {
+        order: -1; /* Đưa lên đầu hoặc vị trí tùy ý nếu muốn */
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    
+    /* Làm nút toggle to ra để dễ bấm trên điện thoại */
+    .theme-toggle-btn {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        background: rgba(0,0,0,0.05);
+    }
+}
 
     /* --------------------------------------------------------------------------
        DARK MODE OVERRIDES SPECIFIC FOR SEARCH MODULE

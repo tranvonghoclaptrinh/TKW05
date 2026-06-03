@@ -270,7 +270,7 @@ class ChatBox {
 $(document).ready(function() {
     // Khởi tạo thực thể điều phối giao diện và Chatbox AI
     const themeManager = new ThemeManager();
-    const chatBox = new ChatBox();
+    new ChatBox();
 
     // Tải bất đồng bộ Header/Footer vào placeholder của trang cha
     $('#header-placeholder').load('components/header.html', function(responseText, textStatus, jqXHR) {
