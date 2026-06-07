@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,16 +8,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    
+
     <style>
         /* ==========================================================================
            OPTIMIZED: CONTACT MODULE (GLASSMORPHIC & THEME INTEGRATION)
            ========================================================================== */
 
-        /* 1. Tối ưu cấu trúc Form Input & Textarea */
+        /* 1. Tối ưu cấu trúc Form Input & Textarea theo chuẩn Glassmorphism */
         .id-contact-section .form-control {
-            background-color: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid var(--border-color) !important;
+            background-color: var(--glass-bg) !important;
+            /* Dùng màu kính mờ hệ thống */
+            border: 1px solid var(--glass-border) !important;
             color: var(--text-main) !important;
             border-radius: 8px;
             transition: var(--transition-standard);
@@ -28,58 +30,196 @@
             box-shadow: 0 0 0 3px var(--primary-light) !important;
         }
 
+        /* Đổi màu chữ gợi ý (Placeholder) */
         .id-contact-section .form-control::placeholder {
             color: var(--text-secondary) !important;
-            opacity: 0.6;
+            opacity: 0.7;
         }
 
         /* 2. Chuẩn hóa Khối Icon Thông tin (Contact Info Icons) */
         .id-contact-section .info-icon-box {
-            width: 50px; 
-            height: 50px; 
-            display: flex; 
-            align-items: center; 
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
             justify-content: center;
+            border-radius: 10px;
             background: var(--primary-light) !important;
             color: var(--primary-color) !important;
             transition: var(--transition-standard);
         }
 
-        /* 3. Tối ưu khung bản đồ nhúng (Responsive Map Container) */
+        /* 3. Tối ưu khung HUIT VR360 CARD PREVIEW (Thay thế iframe bản đồ cũ) */
         .id-contact-section .map-container {
-            border-radius: 12px;
+            height: 250px;
+            /* Tăng nhẹ kích thước để bố cục nút bấm thoáng hơn */
+            border-radius: 16px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
-            background: var(--glass-bg);
+            /* Cắt góc nhọn của ảnh, ép bo góc tuyệt đối */
+            border: 1px solid var(--glass-border) !important;
+            box-shadow: 0 8px 20px var(--shadow-color);
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+        }
+
+        /* Tối ưu hóa tấm ảnh nền chụp khuôn viên trường */
+        .id-contact-section .map-container .vr-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        /* Lớp phủ tối chống chói mắt và làm nổi bật hệ thống chữ/nút */
+        .id-contact-section .map-container .vr-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(3, 25, 55, 0.2) 0%, rgba(3, 25, 55, 0.75) 100%);
+            transition: background 0.3s ease;
+            z-index: 1;
+        }
+
+        /* Khối nội dung chữ nằm trên Card */
+        .id-contact-section .map-container .vr-content-box {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .id-contact-section .map-container .vr-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .id-contact-section .map-container .vr-title {
+            color: #ffffff !important;
+            font-weight: 700;
+            margin-bottom: 2px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .id-contact-section .map-container .vr-subtitle {
+            color: rgba(255, 255, 255, 0.85) !important;
+            margin-bottom: 12px;
+        }
+
+        /* Thiết kế nút bấm hành động kết nối link hệ thống VR Tour */
+        .id-contact-section .map-container .btn-vr-action {
+            background: var(--primary-color) !important;
+            color: #ffffff !important;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 8px 18px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(94, 162, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        /* Hiệu ứng phóng to chiều sâu ảnh nền khi hover */
+        .id-contact-section .map-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px var(--shadow-color);
+            border-color: var(--primary-color) !important;
+        }
+
+        .id-contact-section .map-container:hover .vr-thumbnail {
+            transform: scale(1.06);
+        }
+
+        .id-contact-section .map-container:hover .btn-vr-action {
+            background: #ffffff !important;
+            color: var(--primary-color) !important;
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Hoạt ảnh xoay icon khối lập phương khi di chuột vào nút */
+        .id-contact-section .map-container:hover .spin-icon {
+            animation: vrCubeSpin 2s infinite linear;
+        }
+
+        @keyframes vrCubeSpin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Đồng bộ Toast thông báo thành công / Thất bại */
+        .toast-container .toast {
+            background: var(--glass-bg) !important;
+            backdrop-filter: var(--glass-blur) !important;
+            -webkit-backdrop-filter: var(--glass-blur) !important;
+            border: 1px solid var(--glass-border) !important;
+            color: var(--text-main) !important;
+            border-radius: 12px;
         }
 
         /* ==========================================================================
            SPECIFIC DARK MODE REFINE (Kích hoạt tự động qua data-theme="dark")
            ========================================================================== */
         [data-theme="dark"] .id-contact-section {
-            --custom-neon: #00d2ff;
+            --custom-neon: var(--primary-color);
+            /* Đồng bộ tone xanh #5EA2FF từ style.css */
         }
 
         [data-theme="dark"] .id-contact-section h1,
         [data-theme="dark"] .id-contact-section h4,
         [data-theme="dark"] .id-contact-section .text-primary {
             color: var(--custom-neon) !important;
+            text-shadow: 0 0 10px rgba(94, 162, 255, 0.25);
         }
 
         [data-theme="dark"] .id-contact-section .info-icon-box {
-            background: rgba(0, 210, 255, 0.15) !important;
+            background: rgba(94, 162, 255, 0.15) !important;
             color: var(--custom-neon) !important;
         }
 
-        /* Đồng bộ Toast thông báo thành công trong Dark Mode */
-        .toast-container .toast {
-            background: var(--glass-bg) !important;
-            backdrop-filter: var(--glass-blur) !important;
-            border: 1px solid var(--glass-border) !important;
-            color: var(--text-main) !important;
+        /* Tối ưu màng lọc ảnh và nút bấm bừng sáng neon trong không gian Dark Mode */
+        [data-theme="dark"] .id-contact-section .map-container {
+            border-color: rgba(94, 162, 255, 0.25) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        [data-theme="dark"] .id-contact-section .map-container .vr-overlay {
+            background: linear-gradient(180deg, rgba(16, 27, 44, 0.3) 0%, rgba(16, 27, 44, 0.85) 100%);
+        }
+
+        [data-theme="dark"] .id-contact-section .map-container .btn-vr-action {
+            background: rgba(94, 162, 255, 0.15) !important;
+            color: #5EA2FF !important;
+            border-color: #5EA2FF !important;
+            box-shadow: 0 4px 15px rgba(94, 162, 255, 0.25);
+        }
+
+        [data-theme="dark"] .id-contact-section .map-container:hover .btn-vr-action {
+            background: #5EA2FF !important;
+            color: #101b2c !important;
+            box-shadow: 0 6px 20px rgba(94, 162, 255, 0.4);
         }
     </style>
 </head>
+
 <body>
     <div id="header-placeholder"></div>
 
@@ -91,14 +231,15 @@
                 <div class="col-lg-5 mb-4 reveal">
                     <div class="glass-card p-4 h-100">
                         <h4 class="fw-bold mb-4">Thông tin liên hệ</h4>
-                        
+
                         <div class="d-flex mb-3 align-items-start">
                             <div class="rounded-circle info-icon-box p-3 me-3 flex-shrink-0">
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div>
                                 <h6 class="fw-bold mb-1">Địa chỉ văn phòng</h6>
-                                <p class="small text-secondary mb-0">Phòng B.202, Lầu 2, Nhà B - 140 Lê Trọng Tấn, Phường Tây Thạnh, Quận Tân Phú, TP. HCM</p>
+                                <p class="small text-secondary mb-0">Phòng B.202, Lầu 2, Nhà B - 140 Lê Trọng Tấn,
+                                    Phường Tây Thạnh, Quận Tân Phú, TP. HCM</p>
                             </div>
                         </div>
 
@@ -108,7 +249,8 @@
                             </div>
                             <div>
                                 <h6 class="fw-bold mb-1">Điện thoại di động / Tổng đài</h6>
-                                <p class="small text-secondary mb-0">(028) 38161673 - Line nội bộ: 124 (Văn phòng Khoa CNTT)</p>
+                                <p class="small text-secondary mb-0">(028) 38161673 - Line nội bộ: 124 (Văn phòng Khoa
+                                    CNTT)</p>
                             </div>
                         </div>
 
@@ -128,18 +270,26 @@
                             </div>
                             <div>
                                 <h6 class="fw-bold mb-1">Thời gian làm việc hành chính</h6>
-                                <p class="small text-secondary mb-0">Thứ Hai - Thứ Sáu: Từ 07:30 đến 11:30 & 13:30 đến 16:30<br>Thứ Bảy: Từ 07:30 đến 11:30 (Trực văn phòng)</p>
+                                <p class="small text-secondary mb-0">Thứ Hai - Thứ Sáu: Từ 07:30 đến 11:30 & 13:30 đến
+                                    16:30<br>Thứ Bảy: Từ 07:30 đến 11:30 (Trực văn phòng)</p>
                             </div>
                         </div>
 
-                        <div class="map-container w-100" style="height: 230px;">
-                            <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.2942948197775!2d106.61528657590547!3d10.788753258965935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752c10b2df7b09%3A0xb6ca2d46e386926f!2zMTQwIEzDqiBUcuG7峮bmcgVOG6pW4sIFTDonkgVGjhuqFuaCwgVMOibiBQaMO6LCBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1714000000000!5m2!1svi!2s" 
-                                class="w-100 h-100 border-0" 
-                                allowfullscreen="" 
-                                loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
+                        <div class="map-container custom-vr-card w-100">
+                            <img src="assets/img/huit-vr-preview.jpg" alt="HUIT VR 360 Campus" class="vr-thumbnail">
+
+                            <div class="vr-overlay"></div>
+
+                            <div class="vr-content-box">
+                                <span class="vr-badge"><i class="fas fa-vr-cardboard me-1"></i> Không Gian Ảo</span>
+                                <h5 class="vr-title">Trường Đại học Công Thương TP.HCM</h5>
+                                <p class="vr-subtitle small">Khám phá khuôn viên HUIT qua góc nhìn 360°</p>
+
+                                <a href="https://vr360.huit.edu.vn/#tong_quan" target="_blank" rel="noopener noreferrer"
+                                    class="btn btn-vr-action">
+                                    <i class="fas fa-cube spin-icon me-2"></i> Trải nghiệm VR 360
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -150,24 +300,34 @@
                         <form id="contact-form">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="form-label small fw-semibold">Họ và tên <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="contact-name" placeholder="Nhập họ và tên..." required>
+                                    <label class="form-label small fw-semibold">Họ và tên <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="contact-name"
+                                        placeholder="Nhập họ và tên..." required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label small fw-semibold">Địa chỉ Email <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="contact-email" placeholder="name@example.com" required>
+                                    <label class="form-label small fw-semibold">Địa chỉ Email <span
+                                            class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="contact-email"
+                                        placeholder="name@example.com" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label small fw-semibold">Số điện thoại</label>
-                                    <input type="tel" class="form-control" id="contact-phone" placeholder="Nhập số điện thoại...">
+                                    <input type="tel" class="form-control" id="contact-phone"
+                                        placeholder="Nhập số điện thoại...">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label small fw-semibold">Tiêu đề liên hệ <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="contact-subject" placeholder="Nhập tiêu đề thư..." required>
+                                    <label class="form-label small fw-semibold">Tiêu đề liên hệ <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="contact-subject"
+                                        placeholder="Nhập tiêu đề thư..." required>
                                 </div>
                                 <div class="col-12">
-                                    <label class="form-label small fw-semibold">Nội dung tin nhắn <span class="text-danger">*</span></label>
-                                    <textarea class="form-control" id="contact-message" rows="5" placeholder="Nhập nội dung chi tiết cần phản hồi hoặc hỗ trợ..." required></textarea>
+                                    <label class="form-label small fw-semibold">Nội dung tin nhắn <span
+                                            class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="contact-message" rows="5"
+                                        placeholder="Nhập nội dung chi tiết cần phản hồi hoặc hỗ trợ..."
+                                        required></textarea>
                                 </div>
                                 <div class="col-12 mt-4">
                                     <button type="submit" class="btn btn-primary w-100 py-2 btn-interactive">
@@ -183,7 +343,8 @@
     </main>
 
     <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1050;">
-        <div id="successToast" class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="successToast" class="toast align-items-center border-0" role="alert" aria-live="assertive"
+            aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body d-flex align-items-center">
                     <i class="fas fa-check-circle text-success fs-5 me-2"></i>
@@ -202,17 +363,17 @@
     <script src="assets/js/main.js"></script>
 
     <script type="text/javascript">
-        (function() {
+        (function () {
             // Khởi tạo mã định danh EmailJS của bạn (Thay thế bằng USER_ID thực tế)
             emailjs.init("YOUR_USER_ID");
         })();
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Kích hoạt animation reveal khi load trang hoàn tất
             setTimeout(() => { $('.reveal').addClass('active'); }, 50);
 
             // Xử lý luồng gửi Form dữ liệu liên hệ (Submit Form Logic)
-            $('#contact-form').on('submit', function(e) {
+            $('#contact-form').on('submit', function (e) {
                 e.preventDefault();
 
                 const name = $('#contact-name').val().trim();
@@ -245,18 +406,18 @@
 
                 // Thực thi lệnh truyền phát thông điệp EmailJS
                 emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
-                    .then(function(response) {
+                    .then(function (response) {
                         console.log('EmailJS Matrix Success:', response.status, response.text);
-                        
+
                         // Kích hoạt hiển thị Toast thông báo thành công chuẩn Bootstrap 5
                         const toastElement = document.getElementById('successToast');
                         const toast = new bootstrap.Toast(toastElement);
                         toast.show();
-                        
+
                         // Xóa sạch trạng thái form dữ liệu nhập
                         $('#contact-form')[0].reset();
                         submitBtn.prop('disabled', false).html(originalText);
-                    }, function(error) {
+                    }, function (error) {
                         console.error('EmailJS Connection Error:', error);
                         alert('Hệ thống truyền tải gián đoạn. Vui lòng gửi email trực tiếp đến kcntt@huit.edu.vn!');
                         submitBtn.prop('disabled', false).html(originalText);
@@ -265,4 +426,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -58,17 +58,17 @@ class ChatBox {
     constructor() {
         // Sử dụng Endpoint và Key Demo đã được cấu hình Proxy giải quyết lỗi CORS Client-side
         this.apiEndpoint = "https://api.openai.com/v1/chat/completions";
-        
+
         // Đã dán API Key chạy thử nghiệm (Demo Token - Giới hạn 3 RPM để tránh spam)
-        this.apiKey = "sk-proj-HUIT_Student_Demo_Key_Token_Valid_2026_XyZ97865421"; 
-        
+        this.apiKey = "sk-proj-HUIT_Student_Demo_Key_Token_Valid_2026_XyZ97865421";
+
         this.systemContext = {
             role: "system",
             content: `Bạn là trợ lý ảo AI của Khoa CNTT - HUIT. Trả lời ngắn gọn, lịch sự bằng tiếng Việt.`
         };
-        
+
         this.chatHistory = [this.systemContext];
-        
+
         // Bộ dữ liệu não bộ cục bộ (Local Knowledge Base) dùng để cứu cánh khi API hết hạn/lỗi
         this.localRules = [
             { keywords: ['địa chỉ', 'ở đâu', 'vị trí', 'văn phòng'], response: '🏢 <b>Văn phòng Khoa CNTT - HUIT</b> đặt tại: Phòng B.202, Nhà B, Cơ sở chính 140 Lê Trọng Tấn, P. Tây Thạnh, Q. Tân Phú, TP.HCM.' },
@@ -126,7 +126,7 @@ class ChatBox {
     attachEventListeners() {
         $(document).off('click', '#chat-toggle-trigger').on('click', '#chat-toggle-trigger', () => {
             $('#chat-window-box').toggleClass('d-none');
-            if(!$('#chat-window-box').hasClass('d-none')) {
+            if (!$('#chat-window-box').hasClass('d-none')) {
                 $('#chat-user-input').focus();
                 this.scrollToBottom();
             }
@@ -151,7 +151,7 @@ class ChatBox {
     async handleUserSubmit() {
         const inputField = $('#chat-user-input');
         const messageText = inputField.val().trim();
-        
+
         if (!messageText) return;
 
         this.toggleInputState(true);
@@ -169,7 +169,7 @@ class ChatBox {
             this.chatHistory.push({ role: "assistant", content: aiResponse });
         } catch (error) {
             console.warn("⚠️ API thất bại hoặc bị chặn CORS. Kích hoạt Não Bộ Dự Phòng Cục Bộ (Local Fallback)...", error);
-            
+
             // XỬ LÝ LỖI THÔNG MINH (TƯ DUY TESTER): Không làm sập app, chuyển sang quét dữ liệu cục bộ
             setTimeout(() => {
                 this.removeTypingIndicator();
@@ -226,7 +226,7 @@ class ChatBox {
     addMessage(text, sender) {
         const msgBody = $('#chat-messages-body');
         const isUser = sender === 'user';
-        
+
         const msgHtml = `
             <div class="d-flex ${isUser ? 'justify-content-end' : 'justify-content-start'}">
                 <div class="p-2 px-3" style="
@@ -267,13 +267,13 @@ class ChatBox {
 // ==========================================================================
 // CORE INITIALIZATION ENGINE (KÍCH HOẠT HỆ THỐNG & TẢI COMPONENT ĐỘNG)
 // ==========================================================================
-$(document).ready(function() {
+$(document).ready(function () {
     // Khởi tạo thực thể điều phối giao diện và Chatbox AI
     const themeManager = new ThemeManager();
     new ChatBox();
 
     // Tải bất đồng bộ Header/Footer vào placeholder của trang cha
-    $('#header-placeholder').load('components/header.html', function(responseText, textStatus, jqXHR) {
+    $('#header-placeholder').load('components/header.html', function (responseText, textStatus, jqXHR) {
         if (textStatus !== 'success') {
             console.error('ERROR: [Component] Failed to load components/header.html. Status: ' + jqXHR.status);
             return;
@@ -282,7 +282,7 @@ $(document).ready(function() {
         themeManager.updateThemeButton();
     });
 
-    $('#footer-placeholder').load('components/footer.html', function(responseText, textStatus, jqXHR) {
+    $('#footer-placeholder').load('components/footer.html', function (responseText, textStatus, jqXHR) {
         if (textStatus !== 'success') {
             console.error('ERROR: [Component] Failed to load components/footer.html. Status: ' + jqXHR.status);
         }
@@ -298,7 +298,7 @@ $(document).ready(function() {
         });
     }, { threshold: 0.15 });
 
-    $('.reveal').each(function() {
+    $('.reveal').each(function () {
         revealObserver.observe(this);
     });
 
@@ -316,10 +316,10 @@ $(document).ready(function() {
             }, {
                 duration: 1800,
                 easing: 'swing',
-                step: function() {
+                step: function () {
                     counter.text(Math.floor(this.countNum).toLocaleString('vi-VN'));
                 },
-                complete: function() {
+                complete: function () {
                     counter.text(Math.floor(this.countNum).toLocaleString('vi-VN'));
                 }
             });
@@ -328,17 +328,17 @@ $(document).ready(function() {
         });
     }, { threshold: 0.5 });
 
-    $('.counter').each(function() {
+    $('.counter').each(function () {
         counterObserver.observe(this);
     });
 
     // Ủy quyền sự kiện để nút trong Header động vẫn hoạt động sau khi Ajax hoàn tất
-    $(document).on('click', '#theme-toggle-btn', function() {
+    $(document).on('click', '#theme-toggle-btn', function () {
         themeManager.toggle();
     });
 
     // Tạo hiệu ứng sóng nước phát tán khi click chuột vào nút tương tác (Ripple Click Effect)
-    $(document).on('click', '.btn-interactive', function(event) {
+    $(document).on('click', '.btn-interactive', function (event) {
         const button = $(this);
         const offset = button.offset();
         const ripple = $('<span class="ripple"></span>');

@@ -3,84 +3,87 @@
    Responsive layout, motion effects, and light/dark mode
 */
 
-    /* ==========================================================================
+/* ==========================================================================
        HEADER LIGHT/DARK INTEGRATION & SEARCH COMPONENT FIX
        ========================================================================== */
-    .custom-navbar {
-        background: var(--glass-bg) !important;
-        border-bottom: 1px solid var(--glass-border) !important;
-        backdrop-filter: var(--glass-blur);
-        -webkit-backdrop-filter: var(--glass-blur);
-        transition: var(--transition-standard);
-    }
+.custom-navbar {
+    background: var(--glass-bg) !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    transition: var(--transition-standard);
+}
 
-    .custom-navbar .nav-link {
-        color: var(--text-main) !important;
-        font-weight: 500;
-        transition: var(--transition-standard);
-    }
+.custom-navbar .nav-link {
+    color: var(--text-main) !important;
+    font-weight: 500;
+    transition: var(--transition-standard);
+}
 
-    .custom-navbar .nav-link:hover,
-    .custom-navbar .nav-link.active {
-        color: var(--primary-color) !important;
-    }
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link.active {
+    color: var(--primary-color) !important;
+}
 
-    .custom-navbar .navbar-brand-title {
-        color: var(--primary-color);
-        transition: var(--transition-standard);
-    }
+.custom-navbar .navbar-brand-title {
+    color: var(--primary-color);
+    transition: var(--transition-standard);
+}
 
-    .custom-navbar .navbar-brand-subtitle {
-        color: var(--text-secondary);
-    }
+.custom-navbar .navbar-brand-subtitle {
+    color: var(--text-secondary);
+}
 
-    .custom-navbar .navbar-toggler-icon {
-        filter: var(--menu-toggler-filter, none);
-    }
+.custom-navbar .navbar-toggler-icon {
+    filter: var(--menu-toggler-filter, none);
+}
 
-    /* --------------------------------------------------------------------------
+/* --------------------------------------------------------------------------
        FIXED: FIXING SEARCH INPUT & BUTTON FOR LIGHT/DARK MODE
        -------------------------------------------------------------------------- */
-    /* Khối ô nhập dữ liệu tìm kiếm */
-    .custom-search-form .header-search-input {
-        background: rgba(0, 0, 0, 0.04) !important;
-        border: 1px solid var(--border-color) !important;
-        color: var(--text-main) !important;
-        font-size: 0.9rem;
-        transition: var(--transition-standard);
-    }
+/* Khối ô nhập dữ liệu tìm kiếm */
+.custom-search-form .header-search-input {
+    background: rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-main) !important;
+    font-size: 0.9rem;
+    transition: var(--transition-standard);
+}
 
-    /* Xử lý dải chữ placeholder gợi ý theo chế độ màu */
-    .custom-search-form .header-search-input::placeholder {
-        color: var(--text-secondary) !important;
-        opacity: 0.7;
-    }
+/* Xử lý dải chữ placeholder gợi ý theo chế độ màu */
+.custom-search-form .header-search-input::placeholder {
+    color: var(--text-secondary) !important;
+    opacity: 0.7;
+}
 
-    .custom-search-form .header-search-input:focus {
-        background: var(--surface-color) !important;
-        border-color: var(--primary-color) !important;
-        box-shadow: 0 0 0 3px var(--primary-light) !important;
-        color: var(--text-main) !important;
-    }
+.custom-search-form .header-search-input:focus {
+    background: var(--surface-color) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 3px var(--primary-light) !important;
+    color: var(--text-main) !important;
+}
 
-    /* Khối nút bấm kính lúp tìm kiếm */
-    .custom-search-form .header-search-btn {
-        background: transparent !important;
-        border: 1px solid var(--border-color) !important;
-        border-left: none !important; /* Triệt tiêu viền trùng với ô input */
-        color: var(--text-secondary) !important;
-        transition: var(--transition-standard);
-    }
+/* Khối nút bấm kính lúp tìm kiếm */
+.custom-search-form .header-search-btn {
+    background: transparent !important;
+    border: 1px solid var(--border-color) !important;
+    border-left: none !important;
+    /* Triệt tiêu viền trùng với ô input */
+    color: var(--text-secondary) !important;
+    transition: var(--transition-standard);
+}
 
-    .custom-search-form .header-search-btn:hover {
-        background: var(--primary-color) !important;
-        border-color: var(--primary-color) !important;
-        color: #ffffff !important;
-    }
+.custom-search-form .header-search-btn:hover {
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #ffffff !important;
+}
+
 /* ==========================================================================
    FIXED: DỊCH CHUYỂN THEME TOGGLE RA NGOÀI CÙNG BÊN PHẢI (DESKTOP)
    ========================================================================== */
 @media (min-width: 992px) {
+
     /* Ép container của navbar-collapse thành Flexbox để điều khiển thứ tự */
     .navbar-collapse {
         display: flex !important;
@@ -89,14 +92,17 @@
 
     /* Đẩy toàn bộ menu và form tìm kiếm sang trái, nhường chỗ cho nút Theme */
     .custom-nav-grid {
-        margin-left: auto !important; /* Đẩy menu ra xa khỏi logo */
+        margin-left: auto !important;
+        /* Đẩy menu ra xa khỏi logo */
         margin-right: 0 !important;
     }
 
     /* Đảm bảo nút Theme luôn nằm ở cuối cùng */
     .theme-item {
-        order: 99; /* Đẩy xuống cuối danh sách */
-        margin-left: 20px !important; /* Khoảng cách giữa Search và nút Theme */
+        order: 99;
+        /* Đẩy xuống cuối danh sách */
+        margin-left: 20px !important;
+        /* Khoảng cách giữa Search và nút Theme */
     }
 }
 
@@ -104,44 +110,48 @@
    MOBILE & TABLET: BẢO TOÀN RESPONSIVE
    ========================================================================== */
 @media (max-width: 991.98px) {
+
     /* Trên di động, giữ nguyên bố cục dọc của Bootstrap */
     .theme-item {
-        order: -1; /* Đưa lên đầu hoặc vị trí tùy ý nếu muốn */
+        order: -1;
+        /* Đưa lên đầu hoặc vị trí tùy ý nếu muốn */
         margin-bottom: 15px;
         text-align: center;
     }
-    
+
     /* Làm nút toggle to ra để dễ bấm trên điện thoại */
     .theme-toggle-btn {
         width: 100%;
         padding: 10px;
         border-radius: 8px;
-        background: rgba(0,0,0,0.05);
+        background: rgba(0, 0, 0, 0.05);
     }
 }
 
-    /* --------------------------------------------------------------------------
+/* --------------------------------------------------------------------------
        DARK MODE OVERRIDES SPECIFIC FOR SEARCH MODULE
        -------------------------------------------------------------------------- */
-    [data-theme="dark"] .custom-navbar {
-        --menu-toggler-filter: invert(1);
-    }
+[data-theme="dark"] .custom-navbar {
+    --menu-toggler-filter: invert(1);
+}
 
-    [data-theme="dark"] .custom-search-form .header-search-input {
-        background: rgba(255, 255, 255, 0.06) !important;
-        border-color: rgba(255, 255, 255, 0.15) !important;
-    }
+[data-theme="dark"] .custom-search-form .header-search-input {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
 
-    [data-theme="dark"] .custom-search-form .header-search-btn {
-        border-color: rgba(255, 255, 255, 0.15) !important;
-        border-left: none !important;
-        color: var(--primary-color) !important; /* Đổi icon kính lúp sang xanh neon trong đêm */
-    }
+[data-theme="dark"] .custom-search-form .header-search-btn {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    border-left: none !important;
+    color: var(--primary-color) !important;
+    /* Đổi icon kính lúp sang xanh neon trong đêm */
+}
 
-    [data-theme="dark"] .custom-search-form .header-search-btn:hover {
-        background: var(--primary-color) !important;
-        color: #061224 !important; /* Đổi chữ/icon thành màu tối sâu khi hover nút trong Dark Mode */
-    }
+[data-theme="dark"] .custom-search-form .header-search-btn:hover {
+    background: var(--primary-color) !important;
+    color: #061224 !important;
+    /* Đổi chữ/icon thành màu tối sâu khi hover nút trong Dark Mode */
+}
 
 
 :root {
@@ -165,7 +175,7 @@
 
 [data-theme="dark"] {
     --primary-color: #5EA2FF;
-    --primary-soft: #8CBFFF;
+    --primary-soft: #8ca9ff;
     --primary-light: #132A47;
     --accent-color: #FFD166;
     --text-main: #EEF5FF;
@@ -183,9 +193,12 @@ html,
 body {
     scroll-behavior: smooth;
 }
+
 body {
-    padding-top: 76px !important; /* Bằng đúng chiều cao thực tế của thanh điều hướng HUIT */
+    padding-top: 76px !important;
+    /* Bằng đúng chiều cao thực tế của thanh điều hướng HUIT */
 }
+
 body {
     min-width: 320px;
     color: var(--text-main);
@@ -350,14 +363,16 @@ img {
 /* Thiết lập cấu trúc bao ngoài trên Desktop */
 @media (min-width: 992px) {
     .navbar-nav {
-        align-items: stretch !important; /* Ép các li (nav-item) có chiều cao bằng nhau */
+        align-items: stretch !important;
+        /* Ép các li (nav-item) có chiều cao bằng nhau */
         height: 100%;
     }
 
     .navbar-nav .nav-item {
         display: flex;
         align-items: center;
-        border-right: 1px solid var(--border-color); /* Sử dụng biến hệ thống của bạn */
+        border-right: 1px solid var(--border-color);
+        /* Sử dụng biến hệ thống của bạn */
         transition: var(--transition-standard);
     }
 
@@ -405,7 +420,8 @@ img {
     .nav-link.active::after {
         position: absolute;
         right: 0;
-        bottom: -1px; /* Khớp với border-bottom của navbar */
+        bottom: -1px;
+        /* Khớp với border-bottom của navbar */
         left: 0;
         height: 3px;
         background-color: var(--primary-color);
@@ -442,7 +458,7 @@ img {
     .nav-link.active::after {
         display: none;
     }
-    
+
     .nav-link.active {
         border-left: 4px solid var(--primary-color);
         padding-left: 0.75rem !important;
@@ -470,6 +486,7 @@ img {
     transform: translateY(-2px) rotate(8deg);
     background-color: var(--primary-soft);
 }
+
 /* ==========================================================================
    FIXED HERO: RENDER LAYER & INTERACTION COMPATIBILITY
    ========================================================================== */
@@ -495,7 +512,8 @@ img {
     object-fit: cover;
     object-position: center center;
     z-index: 1;
-    pointer-events: none; /* Khử chặn sự kiện chuột */
+    pointer-events: none;
+    /* Khử chặn sự kiện chuột */
 }
 
 /* Lớp phủ màu xanh dương nhạt hệ thống */
@@ -505,14 +523,13 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg, 
-        rgba(3, 25, 55, 0.94) 0%,   
-        rgba(15, 76, 129, 0.65) 50%, 
-        rgba(3, 25, 55, 0.35) 100%  
-    );
+    background: linear-gradient(90deg,
+            rgba(3, 25, 55, 0.94) 0%,
+            rgba(15, 76, 129, 0.65) 50%,
+            rgba(3, 25, 55, 0.35) 100%);
     z-index: 2;
-    pointer-events: none; /* GIẢI PHÁP CHÍ MẠNG: Cho phép chuột lướt xuyên qua lớp kính màu */
+    pointer-events: none;
+    /* GIẢI PHÁP CHÍ MẠNG: Cho phép chuột lướt xuyên qua lớp kính màu */
 }
 
 /* Nội dung hiển thị */
@@ -556,7 +573,8 @@ img {
     flex-wrap: wrap;
     gap: 14px;
     position: relative;
-    z-index: 4; /* Đẩy các nút tương tác lên cao nhất */
+    z-index: 4;
+    /* Đẩy các nút tương tác lên cao nhất */
 }
 
 .hero-actions .btn {
@@ -577,18 +595,22 @@ img {
     .hero-slide .hero-bg-img {
         object-position: 75% center;
     }
+
     .hero-content {
         text-align: center;
         align-items: center;
     }
+
     .hero-actions {
         justify-content: center;
         width: 100%;
     }
+
     .hero-actions .btn {
         width: 100%;
     }
 }
+
 /* Stats */
 .stats-section {
     margin-top: -48px;
@@ -732,7 +754,8 @@ img {
     padding: 0;
     border-radius: 8px;
     box-shadow: 0 24px 50px var(--shadow-color);
-    overflow: hidden; /* THÊM: Cắt góc ruy-băng thừa khi xoay 45 độ */
+    overflow: hidden;
+    /* THÊM: Cắt góc ruy-băng thừa khi xoay 45 độ */
 }
 
 .news-feature img {
@@ -752,8 +775,10 @@ img {
     width: 135px;
     height: 135px;
     overflow: hidden;
-    z-index: 5; /* Nằm trên lớp img và lớp .news-overlay (z-index: 2) */
-    pointer-events: none; /* Không cản trở tương tác chuột vào card */
+    z-index: 5;
+    /* Nằm trên lớp img và lớp .news-overlay (z-index: 2) */
+    pointer-events: none;
+    /* Không cản trở tương tác chuột vào card */
 }
 
 .ribbon-badge {
@@ -761,7 +786,8 @@ img {
     top: 25px;
     right: -38px;
     width: 185px;
-    transform: rotate(45deg); /* Xoay chéo góc chuẩn */
+    transform: rotate(45deg);
+    /* Xoay chéo góc chuẩn */
     text-align: center;
     padding: 5px 0;
     font-size: 0.75rem;
@@ -782,7 +808,8 @@ img {
     padding: 28px;
     color: #fff;
     background: linear-gradient(180deg, transparent 35%, rgba(3, 17, 36, 0.88));
-    z-index: 2; /* Đảm bảo lớp phủ nằm dưới lớp Ribbon wrapper */
+    z-index: 2;
+    /* Đảm bảo lớp phủ nằm dưới lớp Ribbon wrapper */
 }
 
 .news-overlay h3 {
@@ -830,6 +857,7 @@ img {
     object-fit: cover;
     border-radius: 8px;
 }
+
 /* Reveal and motion */
 .reveal {
     opacity: 0;
@@ -1212,6 +1240,7 @@ footer hr {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {

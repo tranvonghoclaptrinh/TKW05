@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    
+
     <style>
         /* ==========================================================================
            OPTIMIZED: LECTURER DIRECTORY MODULE (LIGHT/DARK INTEGRATION)
@@ -23,8 +24,9 @@
         /* 2. Tối ưu hóa các trường nhập liệu (Input & Select) theo Glassmorphic */
         .id-lecturer-section .form-control,
         .id-lecturer-section .form-select {
-            background-color: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid var(--border-color) !important;
+            background-color: var(--glass-bg) !important;
+            border: 1px solid var(--glass-border) !important;
+            /* Thay --border-color bằng --glass-border để sáng rõ trong tối */
             color: var(--text-main) !important;
             border-radius: 8px;
             transition: var(--transition-standard);
@@ -52,7 +54,7 @@
 
         .id-lecturer-section .form-check-input {
             background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--glass-border);
             cursor: pointer;
         }
 
@@ -61,12 +63,48 @@
             border-color: var(--primary-color) !important;
         }
 
+        /* --------------------------------------------------------------------------
+           INTEGRATED: MODULE SEARCH LECTURER COMPONENT (FIXED LIGHT/DARK)
+           -------------------------------------------------------------------------- */
+        .custom-search-container .search-label-theme {
+            color: var(--text-main) !important;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .custom-search-container .search-addon-theme,
+        .custom-search-container .search-input-theme {
+            border: 1px solid var(--glass-border) !important;
+            color: var(--text-main) !important;
+            background: transparent !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-search-container .search-input-theme::placeholder {
+            color: var(--text-secondary) !important;
+            opacity: 0.7;
+        }
+
+        .custom-search-container .search-icon-theme {
+            color: var(--text-secondary) !important;
+            transition: color 0.3s ease;
+        }
+
+        .custom-search-container .search-input-theme:focus {
+            box-shadow: none !important;
+            border-color: var(--primary-color) !important;
+        }
+
+        .custom-search-container .search-input-theme:focus+.search-addon-theme {
+            border-color: var(--primary-color) !important;
+        }
+
         /* 4. Thẻ thông tin giảng viên (Lecturer Card) */
         .lecturer-card {
             color: var(--text-main);
-            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                        box-shadow 0.3s ease, 
-                        border-color 0.3s ease !important;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease !important;
         }
 
         .lecturer-card:hover {
@@ -93,7 +131,7 @@
 
         .id-lecturer-modal .modal-header,
         .id-lecturer-modal .modal-footer {
-            border-color: var(--border-color) !important;
+            border-color: var(--glass-border) !important;
         }
 
         .id-lecturer-modal .btn-close {
@@ -107,14 +145,24 @@
         [data-theme="dark"] .id-lecturer-section,
         [data-theme="dark"] .id-lecturer-modal {
             --close-btn-filter: invert(1) grayscale(1) brightness(2);
-            --custom-neon: #00d2ff;
+            --custom-neon: #5EA2FF;
         }
 
         [data-theme="dark"] .id-lecturer-section h1,
         [data-theme="dark"] .id-lecturer-section h5,
         [data-theme="dark"] .id-lecturer-section .text-primary,
-        [data-theme="dark"] .id-lecturer-modal .text-primary {
+        [data-theme="dark"] .id-lecturer-modal .text-primary,
+        [data-theme="dark"] .custom-search-container .search-label-theme,
+        [data-theme="dark"] .custom-search-container .search-icon-theme {
             color: var(--custom-neon) !important;
+            /* Ép toàn bộ tiêu đề, nhãn và icon search sang màu xanh Neon trong tối */
+        }
+
+        [data-theme="dark"] .custom-search-container .search-addon-theme,
+        [data-theme="dark"] .custom-search-container .search-input-theme {
+            border-color: rgba(94, 162, 255, 0.25) !important;
+            /* Viền xanh trong suốt tinh tế */
+            background: rgba(16, 27, 44, 0.4) !important;
         }
 
         /* Tối ưu hóa thẻ Select Options trên trình duyệt nền tối */
@@ -124,6 +172,7 @@
         }
     </style>
 </head>
+
 <body>
     <div id="header-placeholder"></div>
 
@@ -136,12 +185,18 @@
                 <aside class="col-lg-3 mb-4">
                     <div class="glass-card p-4 sticky-top">
                         <h5 class="fw-bold mb-4"><i class="fas fa-filter me-2"></i>Bộ lọc</h5>
-                        
-                        <div class="mb-4">
-                            <label class="form-label fw-bold small text-uppercase">Tìm kiếm giảng viên</label>
+
+                        <div class="mb-4 custom-search-container">
+                            <label class="form-label fw-bold small text-uppercase search-label-theme"
+                                for="lecturer-search">Tìm kiếm giảng viên</label>
+
                             <div class="input-group">
-                                <span class="input-group-text bg-transparent" style="border: 1px solid var(--border-color); border-end-0: none;"><i class="fas fa-search text-muted"></i></span>
-                                <input type="text" id="lecturer-search" class="form-control border-start-0" placeholder="Nhập tên hoặc bộ môn...">
+                                <span class="input-group-text bg-transparent search-addon-theme border-end-0">
+                                    <i class="fas fa-search search-icon-theme"></i>
+                                </span>
+                                <input type="text" id="lecturer-search"
+                                    class="form-control search-input-theme border-start-0"
+                                    placeholder="Nhập tên hoặc bộ môn...">
                             </div>
                         </div>
 
@@ -158,25 +213,30 @@
                             <label class="form-label fw-bold small text-uppercase">Bộ môn</label>
                             <div id="dept-checkboxes">
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input filter-dept" type="checkbox" value="CNPM" id="dept-cnpm" checked>
+                                    <input class="form-check-input filter-dept" type="checkbox" value="CNPM"
+                                        id="dept-cnpm" checked>
                                     <label class="form-check-label" for="dept-cnpm">Công nghệ phần mềm</label>
                                 </div>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input filter-dept" type="checkbox" value="HTTT" id="dept-httt" checked>
+                                    <input class="form-check-input filter-dept" type="checkbox" value="HTTT"
+                                        id="dept-httt" checked>
                                     <label class="form-check-label" for="dept-httt">Hệ thống thông tin</label>
                                 </div>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input filter-dept" type="checkbox" value="KHMT" id="dept-khmt" checked>
+                                    <input class="form-check-input filter-dept" type="checkbox" value="KHMT"
+                                        id="dept-khmt" checked>
                                     <label class="form-check-label" for="dept-khmt">Khoa học máy tính</label>
                                 </div>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input filter-dept" type="checkbox" value="MMT" id="dept-mmt" checked>
+                                    <input class="form-check-input filter-dept" type="checkbox" value="MMT"
+                                        id="dept-mmt" checked>
                                     <label class="form-check-label" for="dept-mmt">Mạng máy tính & ANTT</label>
                                 </div>
                             </div>
                         </div>
 
-                        <button id="reset-filters" class="btn btn-outline-secondary w-100 btn-interactive"><i class="fas fa-undo me-2"></i>Đặt lại bộ lọc</button>
+                        <button id="reset-filters" class="btn btn-outline-secondary w-100 btn-interactive"><i
+                                class="fas fa-undo me-2"></i>Đặt lại bộ lọc</button>
                     </div>
                 </aside>
 
@@ -339,23 +399,23 @@
         function applyFilters() {
             const searchText = removeVietnameseTones($('#lecturer-search').val());
             const degree = $('#filter-degree').val();
-            const selectedDepts = $('.filter-dept:checked').map(function() { return this.value; }).get();
+            const selectedDepts = $('.filter-dept:checked').map(function () { return this.value; }).get();
 
             const filtered = lecturers.filter(l => {
                 const targetName = removeVietnameseTones(l.name);
                 const targetPosition = removeVietnameseTones(l.position);
                 const matchesSearch = targetName.includes(searchText) || targetPosition.includes(searchText);
-                
+
                 const matchesDegree = degree === 'all' || l.degree === degree;
                 const matchesDept = selectedDepts.includes(l.dept);
-                
+
                 return matchesSearch && matchesDegree && matchesDept;
             });
 
             renderLecturers(filtered);
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Khởi tạo render lần đầu
             renderLecturers(lecturers);
 
@@ -363,8 +423,8 @@
             $('#lecturer-search').on('keyup', applyFilters);
             $('.filter-dept').on('change', applyFilters);
             $('#filter-degree').on('change', applyFilters);
-            
-            $('#reset-filters').click(function() {
+
+            $('#reset-filters').click(function () {
                 $('#lecturer-search').val('');
                 $('#filter-degree').val('all');
                 $('.filter-dept').prop('checked', true);

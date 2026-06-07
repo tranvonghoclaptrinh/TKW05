@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,379 +10,522 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <style>
-/* ==========================================================================
+    /* ==========================================================================
    OPTIMIZED & REFACTORED: TRAINING PROGRAM MODULE (LIGHT/DARK COMPATIBLE)
    ========================================================================== */
 
-/* 1. LAYER & INTERACTION BASE STYLING (Hỗ trợ cả 2 chế độ) */
-.id-training-section .glass-card {
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                box-shadow 0.3s ease, 
-                border-color 0.3s ease !important;
-}
+    /* 1. LAYER & INTERACTION BASE STYLING (Light Mode cơ bản làm chuẩn) */
+    .id-training-section .glass-card {
+        background: var(--glass-bg) !important;
+        border: 1px solid var(--glass-border) !important;
+        backdrop-filter: var(--glass-blur);
+        -webkit-backdrop-filter: var(--glass-blur);
+        color: var(--text-main) !important;
+        border-radius: 16px;
+        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+            box-shadow 0.3s ease,
+            border-color 0.3s ease !important;
+    }
 
-div.glass-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px var(--shadow-color) !important;
-}
+    .id-training-section .glass-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px var(--shadow-color) !important;
+        border-color: var(--primary-color) !important;
+    }
 
-/* Menu Tabs Nav-pills Navigation */
-.id-training-section .nav-pills .nav-link {
-    position: relative;
-    overflow: hidden;
-    color: var(--text-main) !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
+    /* FIX: Ép tiêu đề chính "Chương trình Đào tạo" và tiêu đề nhánh luôn có màu tối rõ nét ở Light Mode */
+    .id-training-section h1,
+    .id-training-section .custom-tab-title,
+    .id-training-section h3.fw-bold {
+        color: var(--text-main) !important;
+        /* Trả về màu xanh đen thẫm hệ thống */
+        text-shadow: none !important;
+    }
 
-.id-training-section .nav-pills .nav-link span {
-    color: inherit !important;
-    font-weight: 500;
-}
+    /* Menu Tabs Nav-pills Navigation */
+    .id-training-section .nav-pills .nav-link {
+        position: relative;
+        overflow: hidden;
+        color: var(--text-main) !important;
+        /* Trả lại màu chữ tối hệ thống */
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        background: rgba(var(--primary-color-rgb, 0, 102, 204), 0.03) !important;
+        border: 1px solid var(--glass-border) !important;
+        margin-bottom: 5px;
+    }
 
-.id-training-section .nav-pills .nav-link:not(.active) {
-    opacity: 0.85;
-}
+    .id-training-section .nav-pills .nav-link span {
+        color: inherit !important;
+        font-weight: 600;
+    }
 
-.id-training-section .nav-pills .nav-link:hover::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%; width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-    animation: shineEffect 0.6s ease-in-out forwards;
-}
+    /* FIX: Sửa lỗi Tab bị ẩn nhẹ do màu ở Light Mode */
+    .id-training-section .nav-pills .nav-link:not(.active) {
+        opacity: 1 !important;
+        /* Hủy bỏ opacity mờ */
+        color: var(--text-secondary) !important;
+        /* Dùng màu xám đậm dễ nhìn */
+        background: transparent !important;
+    }
 
-.id-training-section .nav-pills .nav-link.active {
-    padding-left: 1.50rem !important;
-    color: var(--primary-color) !important;
-    background-color: rgba(32, 115, 183, 0.1) !important;
-}
+    .id-training-section .nav-pills .nav-link:hover::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(var(--primary-color-rgb, 0, 102, 204), 0.1), transparent);
+        animation: shineEffect 0.6s ease-in-out forwards;
+    }
 
-/* Chỉ báo trạng thái (Status Dot) */
-.id-training-section .tech-status-dot {
-    width: 6px;
-    height: 6px;
-    background-color: var(--text-secondary);
-    border-radius: 50%;
-    display: inline-block;
-    opacity: 0.4;
-    transition: var(--transition-standard);
-}
+    .id-training-section .nav-pills .nav-link.active {
+        padding-left: 1.50rem !important;
+        color: #ffffff !important;
+        /* Chữ trắng nổi bật khi tab active ở Light mode */
+        background-color: var(--primary-color) !important;
+        /* Đổ đặc màu xanh chủ đạo */
+        border-color: var(--primary-color) !important;
+    }
 
-.id-training-section .nav-link.active .tech-status-dot {
-    background-color: var(--primary-color);
-    opacity: 1;
-    animation: techPulse 2s infinite ease-in-out;
-}
+    /* Chỉ báo trạng thái (Status Dot) */
+    .id-training-section .tech-status-dot {
+        width: 6px;
+        height: 6px;
+        background-color: var(--text-secondary);
+        border-radius: 50%;
+        display: inline-block;
+        opacity: 0.5;
+        transition: var(--transition-standard);
+    }
 
-/* Accordion Component */
-.id-training-section .accordion-button {
-    color: var(--text-main) !important;
-    background: var(--glass-bg) !important;
-    border: 1px solid var(--border-color) !important;
-    box-shadow: none !important;
-    transition: background-color 0.3s ease, padding 0.3s ease !important;
-}
+    .id-training-section .nav-link.active .tech-status-dot {
+        background-color: #ffffff !important;
+        /* Dot màu trắng khi active */
+        opacity: 1;
+        animation: techPulse 2s infinite ease-in-out;
+    }
 
-.id-training-section .accordion-button:not(.collapsed) {
-    padding-left: 1.5rem !important;
-    color: var(--primary-color) !important;
-    background: rgba(32, 115, 183, 0.08) !important;
-}
+    /* Accordion Component */
+    .id-training-section .accordion-button {
+        color: var(--text-main) !important;
+        background: var(--glass-bg) !important;
+        border: 1px solid var(--glass-border) !important;
+        box-shadow: none !important;
+        transition: background-color 0.3s ease, padding 0.3s ease !important;
+    }
 
-.id-training-section .accordion-button .text-primary-icon {
-    color: var(--primary-color);
-    transition: transform 0.3s ease;
-}
+    .id-training-section .accordion-button:not(.collapsed) {
+        padding-left: 1.5rem !important;
+        color: var(--primary-color) !important;
+        background: rgba(var(--primary-color-rgb, 0, 102, 204), 0.08) !important;
+        border-color: var(--primary-color) !important;
+    }
 
-.id-training-section .accordion-button:not(.collapsed) .text-primary-icon {
-    transform: rotate(15deg) scale(1.1);
-}
+    .id-training-section .accordion-button .text-primary-icon {
+        color: var(--primary-color);
+        transition: transform 0.3s ease;
+    }
 
-.id-training-section .bg-transparent-body {
-    background: transparent !important;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    color: var(--text-secondary);
-    line-height: 1.65;
-}
+    .id-training-section .accordion-button:not(.collapsed) .text-primary-icon {
+        transform: rotate(15deg) scale(1.1);
+    }
 
-/* Danh sách việc làm tương tác */
-.id-training-section .job-list-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding-top: 4px;
-}
+    .id-training-section .bg-transparent-body {
+        background: transparent !important;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        color: var(--text-secondary);
+        line-height: 1.65;
+    }
 
-.id-training-section .job-animated-item {
-    padding: 10px 14px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
-    transition: all 0.25s ease-in-out;
-    cursor: pointer;
-}
+    /* Danh sách việc làm tương tác */
+    .id-training-section .job-list-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-top: 4px;
+    }
 
-.id-training-section .job-animated-item:hover {
-    background: var(--primary-light);
-    padding-left: 20px;
-    border-color: var(--primary-soft);
-}
+    .id-training-section .job-animated-item {
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: rgba(var(--primary-color-rgb, 0, 102, 204), 0.02);
+        border: 1px solid var(--glass-border);
+        color: var(--text-main);
+        transition: all 0.25s ease-in-out;
+        cursor: pointer;
+    }
 
-.id-training-section .custom-neon-text {
-    color: var(--primary-color);
-}
+    .id-training-section .job-animated-item:hover {
+        background: rgba(var(--primary-color-rgb, 0, 102, 204), 0.08) !important;
+        padding-left: 20px;
+        border-color: var(--primary-color);
+        color: var(--primary-color) !important;
+    }
 
-/* Hoạt ảnh bổ trợ nội dung */
-.id-training-section .tab-content .tab-pane {
-    animation: tabFadeUp 0.45s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-}
+    .id-training-section .custom-neon-text {
+        color: var(--primary-color);
+    }
 
-/* ==========================================================================
-   SPECIFIC DARK MODE OPTIMIZATION (Chỉ kích hoạt khi HTML có data-theme="dark")
+    /* Hoạt ảnh bổ trợ nội dung */
+    .id-training-section .tab-content .tab-pane {
+        animation: tabFadeUp 0.45s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    }
+
+    /* ==========================================================================
+   SPECIFIC DARK MODE OPTIMIZATION (CHỈ KÍCH HOẠT KHI CHUYỂN SANG DARK MODE)
    ========================================================================== */
-[data-theme="dark"] .id-training-section {
-    /* Ép chữ tiêu đề & text mô tả tăng cường độ tương phản trên nền kính tối */
-    --custom-neon: #00d2ff;
-}
+    [data-theme="dark"] .id-training-section {
+        --custom-neon: var(--primary-color);
+        /* Đồng bộ tone xanh #5EA2FF từ style.css */
+    }
 
-[data-theme="dark"] .id-training-section .custom-tab-title {
-    color: var(--custom-neon) !important;
-    text-shadow: 0 0 10px rgba(0, 210, 255, 0.25);
-}
+    /* Vào tối mới hóa xanh Neon rực rỡ và đổ bóng chữ */
+    [data-theme="dark"] .id-training-section h1,
+    [data-theme="dark"] .id-training-section .custom-tab-title,
+    [data-theme="dark"] .id-training-section h3.fw-bold {
+        color: var(--custom-neon) !important;
+        text-shadow: 0 0 10px rgba(94, 162, 255, 0.25) !important;
+    }
 
-[data-theme="dark"] .id-training-section .nav-pills .nav-link.active {
-    color: var(--custom-neon) !important;
-}
+    [data-theme="dark"] .id-training-section .nav-pills .nav-link:not(.active) {
+        color: var(--text-main) !important;
+        background: transparent !important;
+    }
 
-[data-theme="dark"] .id-training-section .nav-link.active .tech-status-dot,
-[data-theme="dark"] .id-training-section .accordion-button:not(.collapsed) {
-    color: var(--custom-neon) !important;
-}
+    [data-theme="dark"] .id-training-section .nav-pills .nav-link.active {
+        color: var(--custom-neon) !important;
+        background-color: rgba(94, 162, 255, 0.12) !important;
+        border-color: var(--custom-neon) !important;
+    }
 
-[data-theme="dark"] .id-training-section .accordion-button::after {
-    filter: invert(1) grayscale(1) brightness(2) !important; /* Đảo màu mũi tên Bootstrap sang trắng */
-}
+    [data-theme="dark"] .id-training-section .nav-link.active .tech-status-dot {
+        background-color: var(--custom-neon) !important;
+    }
 
-[data-theme="dark"] .id-training-section .custom-neon-text {
-    color: var(--custom-neon) !important;
-}
+    [data-theme="dark"] .id-training-section .accordion-button:not(.collapsed) {
+        color: var(--custom-neon) !important;
+        background: rgba(94, 162, 255, 0.12) !important;
+        border-color: var(--custom-neon) !important;
+    }
 
-/* KEYFRAMES ANIMATION WORKSPACE */
-@keyframes shineEffect {
-    0% { left: -100%; }
-    100% { left: 100%; }
-}
+    .id-training-section .accordion-button::after {
+        filter: var(--menu-toggler-filter, none);
+        transition: filter 0.3s ease;
+    }
 
-@keyframes tabFadeUp {
-    0% { opacity: 0; transform: translateY(12px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
+    [data-theme="dark"] .id-training-section .accordion-button:not(.collapsed)::after {
+        filter: brightness(0) invert(1) !important;
+    }
 
-@keyframes techPulse {
-    0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(94, 162, 255, 0.4); }
-    50% { transform: scale(1.2); box-shadow: 0 0 0 6px rgba(94, 162, 255, 0); }
-    100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(94, 162, 255, 0); }
-}
+    [data-theme="dark"] .id-training-section .custom-neon-text {
+        color: var(--custom-neon) !important;
+    }
+
+    [data-theme="dark"] .id-training-section .job-animated-item:hover {
+        background: rgba(94, 162, 255, 0.15) !important;
+        color: var(--custom-neon) !important;
+    }
+
+    /* KEYFRAMES ANIMATION WORKSPACE */
+    @keyframes shineEffect {
+        0% {
+            left: -100%;
+        }
+
+        100% {
+            left: 100%;
+        }
+    }
+
+    @keyframes tabFadeUp {
+        0% {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes techPulse {
+        0% {
+            transform: scale(0.8);
+            box-shadow: 0 0 0 0 rgba(94, 162, 255, 0.4);
+        }
+
+        50% {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 6px rgba(94, 162, 255, 0);
+        }
+
+        100% {
+            transform: scale(0.8);
+            box-shadow: 0 0 0 0 rgba(94, 162, 255, 0);
+        }
+    }
 </style>
+
 <body>
     <div id="header-placeholder"></div>
 
     <main class="py-5 id-training-section">
-    <div class="container">
-        <h1 class="fw-bold mb-5 reveal text-center text-white">Chương trình Đào tạo</h1>
+        <div class="container">
+            <h1 class="fw-bold mb-5 reveal text-center text-white">Chương trình Đào tạo</h1>
 
-        <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="nav flex-column nav-pills glass-card p-3 reveal" id="v-pills-tab" role="tablist">
-                    <button class="nav-link active mb-2 text-start p-3 btn-interactive" id="tab-httt" data-bs-toggle="pill" data-bs-target="#httt" type="button" role="tab" aria-controls="httt" aria-selected="true">
-                        <div class="d-flex align-items-center justify-content-between w-100">
-                            <span><i class="fas fa-network-wired me-2"></i> Hệ thống thông tin</span>
-                            <span class="tech-status-dot"></span>
-                        </div>
-                    </button>
-                    <button class="nav-link mb-2 text-start p-3 btn-interactive" id="tab-cnpm" data-bs-toggle="pill" data-bs-target="#cnpm" type="button" role="tab" aria-controls="cnpm" aria-selected="false">
-                        <div class="d-flex align-items-center justify-content-between w-100">
-                            <span><i class="fas fa-code me-2"></i> Công nghệ phần mềm</span>
-                            <span class="tech-status-dot"></span>
-                        </div>
-                    </button>
-                    <button class="nav-link mb-2 text-start p-3 btn-interactive" id="tab-khmt" data-bs-toggle="pill" data-bs-target="#khmt" type="button" role="tab" aria-controls="khmt" aria-selected="false">
-                        <div class="d-flex align-items-center justify-content-between w-100">
-                            <span><i class="fas fa-microchip me-2"></i> Khoa học máy tính</span>
-                            <span class="tech-status-dot"></span>
-                        </div>
-                    </button>
-                    <button class="nav-link mb-2 text-start p-3 btn-interactive" id="tab-anmt" data-bs-toggle="pill" data-bs-target="#anmt" type="button" role="tab" aria-controls="anmt" aria-selected="false">
-                        <div class="d-flex align-items-center justify-content-between w-100">
-                            <span><i class="fas fa-shield-alt me-2"></i> An toàn thông tin</span>
-                            <span class="tech-status-dot"></span>
-                        </div>
-                    </button>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="nav flex-column nav-pills glass-card p-3 reveal" id="v-pills-tab" role="tablist">
+                        <button class="nav-link active mb-2 text-start p-3 btn-interactive" id="tab-httt"
+                            data-bs-toggle="pill" data-bs-target="#httt" type="button" role="tab" aria-controls="httt"
+                            aria-selected="true">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <span><i class="fas fa-network-wired me-2"></i> Hệ thống thông tin</span>
+                                <span class="tech-status-dot"></span>
+                            </div>
+                        </button>
+                        <button class="nav-link mb-2 text-start p-3 btn-interactive" id="tab-cnpm" data-bs-toggle="pill"
+                            data-bs-target="#cnpm" type="button" role="tab" aria-controls="cnpm" aria-selected="false">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <span><i class="fas fa-code me-2"></i> Công nghệ phần mềm</span>
+                                <span class="tech-status-dot"></span>
+                            </div>
+                        </button>
+                        <button class="nav-link mb-2 text-start p-3 btn-interactive" id="tab-khmt" data-bs-toggle="pill"
+                            data-bs-target="#khmt" type="button" role="tab" aria-controls="khmt" aria-selected="false">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <span><i class="fas fa-microchip me-2"></i> Khoa học máy tính</span>
+                                <span class="tech-status-dot"></span>
+                            </div>
+                        </button>
+                        <button class="nav-link mb-2 text-start p-3 btn-interactive" id="tab-anmt" data-bs-toggle="pill"
+                            data-bs-target="#anmt" type="button" role="tab" aria-controls="anmt" aria-selected="false">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                                <span><i class="fas fa-shield-alt me-2"></i> An toàn thông tin</span>
+                                <span class="tech-status-dot"></span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-lg-8">
-                <div class="tab-content reveal" id="v-pills-tabContent">
-                    
-                    <div class="tab-pane fade show active glass-card p-4" id="httt" role="tabpanel" aria-labelledby="tab-httt">
-                        <h3 class="fw-bold custom-tab-title mb-3">Ngành Hệ thống thông tin</h3>
-                        <p class="custom-tab-desc">Đào tạo cử nhân có khả năng thiết kế, xây dựng, triển khai và quản trị các hệ thống thông tin trong doanh nghiệp.</p>
-                        
-                        <div class="accordion mt-4" id="accordionHTTT">
-                            <div class="accordion-item border-0 mb-2 bg-transparent">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button rounded-3 glass-card text-start" type="button" data-bs-toggle="collapse" data-bs-target="#httt-1" aria-expanded="true">
-                                        <i class="fas fa-bullseye me-2 text-primary-icon"></i> Mục tiêu đào tạo
-                                    </button>
-                                </h2>
-                                <div id="httt-1" class="accordion-collapse collapse show" data-bs-parent="#accordionHTTT">
-                                    <div class="accordion-body bg-transparent-body">
-                                        Sinh viên tốt nghiệp có kiến thức vững chắc về cơ sở dữ liệu, phân tích thiết kế hệ thống, quản trị chiến lược dữ liệu và khai thác các giải pháp lớn như ERP, CRM phục vụ chuyển đổi số doanh nghiệp.
+                <div class="col-lg-8">
+                    <div class="tab-content reveal" id="v-pills-tabContent">
+
+                        <div class="tab-pane fade show active glass-card p-4" id="httt" role="tabpanel"
+                            aria-labelledby="tab-httt">
+                            <h3 class="fw-bold custom-tab-title mb-3">Ngành Hệ thống thông tin</h3>
+                            <p class="custom-tab-desc">Đào tạo cử nhân có khả năng thiết kế, xây dựng, triển khai và
+                                quản trị các hệ thống thông tin trong doanh nghiệp.</p>
+
+                            <div class="accordion mt-4" id="accordionHTTT">
+                                <div class="accordion-item border-0 mb-2 bg-transparent">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button rounded-3 glass-card text-start" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#httt-1" aria-expanded="true">
+                                            <i class="fas fa-bullseye me-2 text-primary-icon"></i> Mục tiêu đào tạo
+                                        </button>
+                                    </h2>
+                                    <div id="httt-1" class="accordion-collapse collapse show"
+                                        data-bs-parent="#accordionHTTT">
+                                        <div class="accordion-body bg-transparent-body">
+                                            Sinh viên tốt nghiệp có kiến thức vững chắc về cơ sở dữ liệu, phân tích
+                                            thiết kế hệ thống, quản trị chiến lược dữ liệu và khai thác các giải pháp
+                                            lớn như ERP, CRM phục vụ chuyển đổi số doanh nghiệp.
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="accordion-item border-0 mb-2 bg-transparent">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed rounded-3 glass-card text-start" type="button" data-bs-toggle="collapse" data-bs-target="#httt-2" aria-expanded="false">
-                                        <i class="fas fa-briefcase me-2 text-primary-icon"></i> Vị trí việc làm
-                                    </button>
-                                </h2>
-                                <div id="httt-2" class="accordion-collapse collapse" data-bs-parent="#accordionHTTT">
-                                    <div class="accordion-body bg-transparent-body">
-                                        <div class="job-list-wrapper">
-                                            <div class="job-animated-item"><i class="fas fa-chevron-right me-2 custom-neon-text"></i> Chuyên viên phân tích hệ thống (System Analyst - SA)</div>
-                                            <div class="job-animated-item"><i class="fas fa-chevron-right me-2 custom-neon-text"></i> Quản trị cơ sở dữ liệu (Database Administrator - DBA)</div>
-                                            <div class="job-animated-item"><i class="fas fa-chevron-right me-2 custom-neon-text"></i> Chuyên viên triển khai giải pháp phần mềm quản trị doanh nghiệp</div>
+
+                                <div class="accordion-item border-0 mb-2 bg-transparent">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed rounded-3 glass-card text-start"
+                                            type="button" data-bs-toggle="collapse" data-bs-target="#httt-2"
+                                            aria-expanded="false">
+                                            <i class="fas fa-briefcase me-2 text-primary-icon"></i> Vị trí việc làm
+                                        </button>
+                                    </h2>
+                                    <div id="httt-2" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionHTTT">
+                                        <div class="accordion-body bg-transparent-body">
+                                            <div class="job-list-wrapper">
+                                                <div class="job-animated-item"><i
+                                                        class="fas fa-chevron-right me-2 custom-neon-text"></i> Chuyên
+                                                    viên phân tích hệ thống (System Analyst - SA)</div>
+                                                <div class="job-animated-item"><i
+                                                        class="fas fa-chevron-right me-2 custom-neon-text"></i> Quản trị
+                                                    cơ sở dữ liệu (Database Administrator - DBA)</div>
+                                                <div class="job-animated-item"><i
+                                                        class="fas fa-chevron-right me-2 custom-neon-text"></i> Chuyên
+                                                    viên triển khai giải pháp phần mềm quản trị doanh nghiệp</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="tab-pane fade glass-card p-4" id="cnpm" role="tabpanel" aria-labelledby="tab-cnpm">
-                        <h3 class="fw-bold custom-tab-title mb-3">Ngành Công nghệ phần mềm</h3>
-                        <p class="custom-tab-desc">Tập trung vào quy trình sản xuất phần mềm chuyên nghiệp, từ khâu thu thập yêu cầu khách hàng, thiết kế kiến trúc, kiểm thử cho đến bảo trì hệ thống.</p>
-                        
-                        <div class="accordion mt-4" id="accordionCNPM">
-                            <div class="accordion-item border-0 mb-2 bg-transparent">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button rounded-3 glass-card text-start" type="button" data-bs-toggle="collapse" data-bs-target="#cnpm-1" aria-expanded="true">
-                                        <i class="fas fa-bullseye me-2 text-primary-icon"></i> Mục tiêu đào tạo
-                                    </button>
-                                </h2>
-                                <div id="cnpm-1" class="accordion-collapse collapse show" data-bs-parent="#accordionCNPM">
-                                    <div class="accordion-body bg-transparent-body">
-                                        Trang bị kiến thức chuyên sâu về các ngôn ngữ lập trình hiện đại, kiến trúc hệ thống, quy trình phát triển Agile/Scrum, kiểm thử tự động phần mềm (Automation Testing) và các nền tảng điện toán đám mây.
+                        <div class="tab-pane fade glass-card p-4" id="cnpm" role="tabpanel" aria-labelledby="tab-cnpm">
+                            <h3 class="fw-bold custom-tab-title mb-3">Ngành Công nghệ phần mềm</h3>
+                            <p class="custom-tab-desc">Tập trung vào quy trình sản xuất phần mềm chuyên nghiệp, từ khâu
+                                thu thập yêu cầu khách hàng, thiết kế kiến trúc, kiểm thử cho đến bảo trì hệ thống.</p>
+
+                            <div class="accordion mt-4" id="accordionCNPM">
+                                <div class="accordion-item border-0 mb-2 bg-transparent">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button rounded-3 glass-card text-start" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#cnpm-1" aria-expanded="true">
+                                            <i class="fas fa-bullseye me-2 text-primary-icon"></i> Mục tiêu đào tạo
+                                        </button>
+                                    </h2>
+                                    <div id="cnpm-1" class="accordion-collapse collapse show"
+                                        data-bs-parent="#accordionCNPM">
+                                        <div class="accordion-body bg-transparent-body">
+                                            Trang bị kiến thức chuyên sâu về các ngôn ngữ lập trình hiện đại, kiến trúc
+                                            hệ thống, quy trình phát triển Agile/Scrum, kiểm thử tự động phần mềm
+                                            (Automation Testing) và các nền tảng điện toán đám mây.
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="accordion-item border-0 mb-2 bg-transparent">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed rounded-3 glass-card text-start" type="button" data-bs-toggle="collapse" data-bs-target="#cnpm-2" aria-expanded="false">
-                                        <i class="fas fa-briefcase me-2 text-primary-icon"></i> Vị trí việc làm
-                                    </button>
-                                </h2>
-                                <div id="cnpm-2" class="accordion-collapse collapse" data-bs-parent="#accordionCNPM">
-                                    <div class="accordion-body bg-transparent-body">
-                                        <div class="job-list-wrapper">
-                                            <div class="job-animated-item"><i class="fas fa-chevron-right me-2 custom-neon-text"></i> Kỹ sư phát triển phần mềm (Full-Stack / Frontend / Backend Developer)</div>
-                                            <div class="job-animated-item"><i class="fas fa-chevron-right me-2 custom-neon-text"></i> Kỹ sư Kiểm thử phần mềm (Manual / Automation Software Tester)</div>
-                                            <div class="job-animated-item"><i class="fas fa-chevron-right me-2 custom-neon-text"></i> Chuyên viên phân tích yêu cầu nghiệp vụ (Business Analyst - BA)</div>
+
+                                <div class="accordion-item border-0 mb-2 bg-transparent">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed rounded-3 glass-card text-start"
+                                            type="button" data-bs-toggle="collapse" data-bs-target="#cnpm-2"
+                                            aria-expanded="false">
+                                            <i class="fas fa-briefcase me-2 text-primary-icon"></i> Vị trí việc làm
+                                        </button>
+                                    </h2>
+                                    <div id="cnpm-2" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionCNPM">
+                                        <div class="accordion-body bg-transparent-body">
+                                            <div class="job-list-wrapper">
+                                                <div class="job-animated-item"><i
+                                                        class="fas fa-chevron-right me-2 custom-neon-text"></i> Kỹ sư
+                                                    phát triển phần mềm (Full-Stack / Frontend / Backend Developer)
+                                                </div>
+                                                <div class="job-animated-item"><i
+                                                        class="fas fa-chevron-right me-2 custom-neon-text"></i> Kỹ sư
+                                                    Kiểm thử phần mềm (Manual / Automation Software Tester)</div>
+                                                <div class="job-animated-item"><i
+                                                        class="fas fa-chevron-right me-2 custom-neon-text"></i> Chuyên
+                                                    viên phân tích yêu cầu nghiệp vụ (Business Analyst - BA)</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="tab-pane fade glass-card p-4" id="khmt" role="tabpanel" aria-labelledby="tab-khmt">
-                        <h3 class="fw-bold custom-tab-title mb-3">Ngành Khoa học máy tính</h3>
-                        <p class="custom-tab-desc">Nghiên cứu sâu về thuật toán, cơ sở lý thuyết toán học của máy tính, trí tuệ nhân tạo (AI) và các hệ thống xử lý tính toán thông minh.</p>
-                        
-                        <div class="accordion mt-4" id="accordionKHMT">
-                            <div class="accordion-item border-0 mb-2 bg-transparent">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button rounded-3 glass-card text-start" type="button" data-bs-toggle="collapse" data-bs-target="#khmt-1" aria-expanded="true">
-                                        <i class="fas fa-bullseye me-2 text-primary-icon"></i> Mục tiêu đào tạo
-                                    </button>
-                                </h2>
-                                <div id="khmt-1" class="accordion-collapse collapse show" data-bs-parent="#accordionKHMT">
-                                    <div class="accordion-body bg-transparent-body">
-                                        Cung cấp nền tảng toán học máy tính, cấu trúc dữ liệu và giải thuật nâng cao, kỹ thuật học máy (Machine Learning), học sâu (Deep Learning) và xử lý dữ liệu lớn (Big Data).
+                        <div class="tab-pane fade glass-card p-4" id="khmt" role="tabpanel" aria-labelledby="tab-khmt">
+                            <h3 class="fw-bold custom-tab-title mb-3">Ngành Khoa học máy tính</h3>
+                            <p class="custom-tab-desc">Nghiên cứu sâu về thuật toán, cơ sở lý thuyết toán học của máy
+                                tính, trí tuệ nhân tạo (AI) và các hệ thống xử lý tính toán thông minh.</p>
+
+                            <div class="accordion mt-4" id="accordionKHMT">
+                                <div class="accordion-item border-0 mb-2 bg-transparent">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button rounded-3 glass-card text-start" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#khmt-1" aria-expanded="true">
+                                            <i class="fas fa-bullseye me-2 text-primary-icon"></i> Mục tiêu đào tạo
+                                        </button>
+                                    </h2>
+                                    <div id="khmt-1" class="accordion-collapse collapse show"
+                                        data-bs-parent="#accordionKHMT">
+                                        <div class="accordion-body bg-transparent-body">
+                                            Cung cấp nền tảng toán học máy tính, cấu trúc dữ liệu và giải thuật nâng
+                                            cao, kỹ thuật học máy (Machine Learning), học sâu (Deep Learning) và xử lý
+                                            dữ liệu lớn (Big Data).
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="accordion-item border-0 mb-2 bg-transparent">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed rounded-3 glass-card text-start" type="button" data-bs-toggle="collapse" data-bs-target="#khmt-2" aria-expanded="false">
-                                        <i class="fas fa-briefcase me-2 text-primary-icon"></i> Vị trí việc làm
-                                    </button>
-                                </h2>
-                                <div id="khmt-2" class="accordion-collapse collapse" data-bs-parent="#accordionKHMT">
-                                    <div class="accordion-body bg-transparent-body">
-                                        <div class="job-list-wrapper">
-                                            <div class="job-animated-item"><i class="fas fa-chevron-right me-2 custom-neon-text"></i> Kỹ sư phát triển Trí tuệ nhân tạo & Học máy (AI/ML Engineer)</div>
-                                            <div class="job-animated-item"><i class="fas fa-chevron-right me-2 custom-neon-text"></i> Kỹ sư dữ liệu / Chuyên viên phân tích dữ liệu (Data Engineer / Analyst)</div>
+
+                                <div class="accordion-item border-0 mb-2 bg-transparent">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed rounded-3 glass-card text-start"
+                                            type="button" data-bs-toggle="collapse" data-bs-target="#khmt-2"
+                                            aria-expanded="false">
+                                            <i class="fas fa-briefcase me-2 text-primary-icon"></i> Vị trí việc làm
+                                        </button>
+                                    </h2>
+                                    <div id="khmt-2" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionKHMT">
+                                        <div class="accordion-body bg-transparent-body">
+                                            <div class="job-list-wrapper">
+                                                <div class="job-animated-item"><i
+                                                        class="fas fa-chevron-right me-2 custom-neon-text"></i> Kỹ sư
+                                                    phát triển Trí tuệ nhân tạo & Học máy (AI/ML Engineer)</div>
+                                                <div class="job-animated-item"><i
+                                                        class="fas fa-chevron-right me-2 custom-neon-text"></i> Kỹ sư dữ
+                                                    liệu / Chuyên viên phân tích dữ liệu (Data Engineer / Analyst)</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="tab-pane fade glass-card p-4" id="anmt" role="tabpanel" aria-labelledby="tab-anmt">
-                        <h3 class="fw-bold custom-tab-title mb-3">Ngành An toàn thông tin</h3>
-                        <p class="custom-tab-desc">Bảo vệ hạ tầng thông tin, hệ thống mạng, tài nguyên số và dữ liệu của tổ chức trước các cuộc tấn công mạng, lỗ hổng bảo mật và mã độc.</p>
-                        
-                        <div class="accordion mt-4" id="accordionANMT">
-                            <div class="accordion-item border-0 mb-2 bg-transparent">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button rounded-3 glass-card text-start" type="button" data-bs-toggle="collapse" data-bs-target="#anmt-1" aria-expanded="true">
-                                        <i class="fas fa-bullseye me-2 text-primary-icon"></i> Mục tiêu đào tạo
-                                    </button>
-                                </h2>
-                                <div id="anmt-1" class="accordion-collapse collapse show" data-bs-parent="#accordionANMT">
-                                    <div class="accordion-body bg-transparent-body">
-                                        Trang bị năng lực mật mã học, quản trị an ninh mạng, kiểm thử xâm nhập (Penetration Testing), giám sát an toàn thông tin (SOC) và điều tra xử lý sự cố an ninh mạng.
+                        <div class="tab-pane fade glass-card p-4" id="anmt" role="tabpanel" aria-labelledby="tab-anmt">
+                            <h3 class="fw-bold custom-tab-title mb-3">Ngành An toàn thông tin</h3>
+                            <p class="custom-tab-desc">Bảo vệ hạ tầng thông tin, hệ thống mạng, tài nguyên số và dữ liệu
+                                của tổ chức trước các cuộc tấn công mạng, lỗ hổng bảo mật và mã độc.</p>
+
+                            <div class="accordion mt-4" id="accordionANMT">
+                                <div class="accordion-item border-0 mb-2 bg-transparent">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button rounded-3 glass-card text-start" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#anmt-1" aria-expanded="true">
+                                            <i class="fas fa-bullseye me-2 text-primary-icon"></i> Mục tiêu đào tạo
+                                        </button>
+                                    </h2>
+                                    <div id="anmt-1" class="accordion-collapse collapse show"
+                                        data-bs-parent="#accordionANMT">
+                                        <div class="accordion-body bg-transparent-body">
+                                            Trang bị năng lực mật mã học, quản trị an ninh mạng, kiểm thử xâm nhập
+                                            (Penetration Testing), giám sát an toàn thông tin (SOC) và điều tra xử lý sự
+                                            cố an ninh mạng.
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="accordion-item border-0 mb-2 bg-transparent">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed rounded-3 glass-card text-start" type="button" data-bs-toggle="collapse" data-bs-target="#anmt-2" aria-expanded="false">
-                                        <i class="fas fa-briefcase me-2 text-primary-icon"></i> Vị trí việc làm
-                                    </button>
-                                </h2>
-                                <div id="anmt-2" class="accordion-collapse collapse" data-bs-parent="#accordionANMT">
-                                    <div class="accordion-body bg-transparent-body">
-                                        <div class="job-list-wrapper">
-                                            <div class="job-animated-item"><i class="fas fa-chevron-right me-2 custom-neon-text"></i> Chuyên viên kiểm thử xâm nhập hệ thống (Penetration Tester)</div>
-                                            <div class="job-animated-item"><i class="fas fa-chevron-right me-2 custom-neon-text"></i> Kỹ sư vận hành và giám sát an ninh mạng (SOC Engineer)</div>
+
+                                <div class="accordion-item border-0 mb-2 bg-transparent">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed rounded-3 glass-card text-start"
+                                            type="button" data-bs-toggle="collapse" data-bs-target="#anmt-2"
+                                            aria-expanded="false">
+                                            <i class="fas fa-briefcase me-2 text-primary-icon"></i> Vị trí việc làm
+                                        </button>
+                                    </h2>
+                                    <div id="anmt-2" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionANMT">
+                                        <div class="accordion-body bg-transparent-body">
+                                            <div class="job-list-wrapper">
+                                                <div class="job-animated-item"><i
+                                                        class="fas fa-chevron-right me-2 custom-neon-text"></i> Chuyên
+                                                    viên kiểm thử xâm nhập hệ thống (Penetration Tester)</div>
+                                                <div class="job-animated-item"><i
+                                                        class="fas fa-chevron-right me-2 custom-neon-text"></i> Kỹ sư
+                                                    vận hành và giám sát an ninh mạng (SOC Engineer)</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 
     <div id="footer-placeholder"></div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>

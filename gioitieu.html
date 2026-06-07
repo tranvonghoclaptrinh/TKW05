@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <style>
-/* ==========================================================================
+    /* ==========================================================================
        REFRACTORED & THEME-OPTIMIZED: INTERACTIVE TIMELINE MODULE
        ========================================================================== */
 
@@ -22,7 +23,9 @@
     .timeline::before {
         content: '';
         position: absolute;
-        top: 0; bottom: 0; left: 50%;
+        top: 0;
+        bottom: 0;
+        left: 50%;
         width: 4px;
         background: linear-gradient(to bottom, var(--primary-color), var(--primary-soft), transparent);
         transform: translateX(-50%);
@@ -68,7 +71,8 @@
     .timeline-panel::before {
         content: "";
         position: absolute;
-        top: 28px; right: -10px;
+        top: 28px;
+        right: -10px;
         border-width: 10px 0 10px 10px;
         border-style: solid;
         border-color: transparent transparent transparent var(--glass-bg);
@@ -76,7 +80,8 @@
     }
 
     .timeline-item.timeline-right .timeline-panel::before {
-        left: -10px; right: auto;
+        left: -10px;
+        right: auto;
         border-width: 10px 10px 10px 0;
         border-color: transparent var(--glass-bg) transparent transparent;
     }
@@ -85,9 +90,11 @@
     .timeline-badge {
         width: 44px;
         height: 44px;
-        line-height: 40px; /* Khớp cân bằng với border 2px */
+        line-height: 40px;
+        /* Khớp cân bằng với border 2px */
         position: absolute;
-        top: 16px; right: -22px;
+        top: 16px;
+        right: -22px;
         z-index: 10;
         background-color: var(--surface-color);
         border: 2px solid var(--primary-color);
@@ -100,7 +107,8 @@
     }
 
     .timeline-item.timeline-right .timeline-badge {
-        left: -22px; right: auto;
+        left: -22px;
+        right: auto;
     }
 
     /* Phản hồi tương tác khi hover vào panel */
@@ -133,7 +141,7 @@
         .timeline::before {
             left: 20px;
         }
-        
+
         .timeline-item {
             width: 100%;
             left: 0 !important;
@@ -141,17 +149,19 @@
             padding-right: 0;
             justify-content: flex-start;
         }
-        
+
         .timeline-badge {
-            left: -2px !important; right: auto !important;
+            left: -2px !important;
+            right: auto !important;
             width: 36px;
             height: 36px;
             line-height: 32px;
             font-size: 0.85rem;
         }
-        
+
         .timeline-panel::before {
-            left: -10px !important; right: auto !important;
+            left: -10px !important;
+            right: auto !important;
             border-width: 10px 10px 10px 0;
             border-color: transparent var(--glass-bg) transparent transparent;
         }
@@ -161,6 +171,7 @@
         }
     }
 </style>
+
 <body>
     <div id="header-placeholder"></div>
 
@@ -178,78 +189,98 @@
             <div class="row mb-5">
                 <div class="col-lg-6 reveal">
                     <p class="lead fw-bold text-primary">Sứ mạng & Tầm nhìn</p>
-                    <p>Khoa Công nghệ Thông tin - Trường Đại học Công Thương TP.HCM (HUIT) là một trong những đơn vị đào tạo nòng cốt của nhà trường, với nhiệm vụ đào tạo nguồn nhân lực chất lượng cao trong lĩnh vực CNTT, đáp ứng nhu cầu phát triển của xã hội và hội nhập quốc tế.</p>
-                    <p>Tầm nhìn đến năm 2030, Khoa sẽ trở thành trung tâm đào tạo và nghiên cứu khoa học ứng dụng hàng đầu trong khu vực, gắn liền với thực tiễn sản xuất và dịch vụ.</p>
+                    <p>Khoa Công nghệ Thông tin - Trường Đại học Công Thương TP.HCM (HUIT) là một trong những đơn vị đào
+                        tạo nòng cốt của nhà trường, với nhiệm vụ đào tạo nguồn nhân lực chất lượng cao trong lĩnh vực
+                        CNTT, đáp ứng nhu cầu phát triển của xã hội và hội nhập quốc tế.</p>
+                    <p>Tầm nhìn đến năm 2030, Khoa sẽ trở thành trung tâm đào tạo và nghiên cứu khoa học ứng dụng hàng
+                        đầu trong khu vực, gắn liền với thực tiễn sản xuất và dịch vụ.</p>
                 </div>
                 <div class="col-lg-6 reveal" style="transition-delay: 0.2s;">
-                    <img src="https://huit.edu.vn/images/vien-chuc/bgd-dt.jpg" alt="Faculty" class="img-fluid rounded-4 shadow">
+                    <img src="https://huit.edu.vn/images/vien-chuc/bgd-dt.jpg" alt="Faculty"
+                        class="img-fluid rounded-4 shadow">
                 </div>
             </div>
 
             <section class="mb-5 py-5 position-relative overflow-hidden">
-    <h2 class="fw-bold mb-5 reveal text-center">Lịch sử phát triển</h2>
-    
-    <div class="timeline mx-auto position-relative" style="max-width: 900px;">
-        <div class="timeline-item timeline-left reveal">
-            <div class="timeline-badge"><i class="fas fa-flag"></i></div>
-            <div class="timeline-panel glass-card p-4">
-                <h5 class="fw-bold text-primary mb-2">Năm 2010</h5>
-                <p class="mb-0 text-secondary">Thành lập Khoa Công nghệ Thông tin trên cơ sở Bộ môn Tin học.</p>
-            </div>
-        </div>
+                <h2 class="fw-bold mb-5 reveal text-center">Lịch sử phát triển</h2>
 
-        <div class="timeline-item timeline-right reveal">
-            <div class="timeline-badge"><i class="fas fa-graduation-cap"></i></div>
-            <div class="timeline-panel glass-card p-4">
-                <h5 class="fw-bold text-primary mb-2">Năm 2015</h5>
-                <p class="mb-0 text-secondary">Mở rộng quy mô đào tạo với 3 chuyên ngành: Hệ thống thông tin, Công nghệ phần mềm, và Khoa học máy tính.</p>
-            </div>
-        </div>
+                <div class="timeline mx-auto position-relative" style="max-width: 900px;">
+                    <div class="timeline-item timeline-left reveal">
+                        <div class="timeline-badge"><i class="fas fa-flag"></i></div>
+                        <div class="timeline-panel glass-card p-4">
+                            <h5 class="fw-bold text-primary mb-2">Năm 2010</h5>
+                            <p class="mb-0 text-secondary">Thành lập Khoa Công nghệ Thông tin trên cơ sở Bộ môn Tin học.
+                            </p>
+                        </div>
+                    </div>
 
-        <div class="timeline-item timeline-left reveal">
-            <div class="timeline-badge"><i class="fas fa-award"></i></div>
-            <div class="timeline-panel glass-card p-4">
-                <h5 class="fw-bold text-primary mb-2">Năm 2020</h5>
-                <p class="mb-0 text-secondary">Đạt chuẩn kiểm định chất lượng chương trình đào tạo theo tiêu chuẩn AUN-QA.</p>
-            </div>
-        </div>
+                    <div class="timeline-item timeline-right reveal">
+                        <div class="timeline-badge"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="timeline-panel glass-card p-4">
+                            <h5 class="fw-bold text-primary mb-2">Năm 2015</h5>
+                            <p class="mb-0 text-secondary">Mở rộng quy mô đào tạo với 3 chuyên ngành: Hệ thống thông
+                                tin, Công nghệ phần mềm, và Khoa học máy tính.</p>
+                        </div>
+                    </div>
 
-        <div class="timeline-item timeline-right reveal">
-            <div class="timeline-badge"><i class="fas fa-chart-line"></i></div>
-            <div class="timeline-panel glass-card p-4">
-                <h5 class="fw-bold text-primary mb-2">Hiện tại</h5>
-                <p class="mb-0 text-secondary">Đang đào tạo hơn 5000 sinh viên với đội ngũ giảng viên trình độ cao.</p>
-            </div>
-        </div>
-    </div>
-</section>
+                    <div class="timeline-item timeline-left reveal">
+                        <div class="timeline-badge"><i class="fas fa-award"></i></div>
+                        <div class="timeline-panel glass-card p-4">
+                            <h5 class="fw-bold text-primary mb-2">Năm 2020</h5>
+                            <p class="mb-0 text-secondary">Đạt chuẩn kiểm định chất lượng chương trình đào tạo theo tiêu
+                                chuẩn AUN-QA.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item timeline-right reveal">
+                        <div class="timeline-badge"><i class="fas fa-chart-line"></i></div>
+                        <div class="timeline-panel glass-card p-4">
+                            <h5 class="fw-bold text-primary mb-2">Hiện tại</h5>
+                            <p class="mb-0 text-secondary">Đang đào tạo hơn 5000 sinh viên với đội ngũ giảng viên trình
+                                độ cao.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <!-- Leadership Section -->
             <section class="mb-5">
                 <h2 class="fw-bold mb-5 reveal text-center">Ban Chủ nhiệm Khoa</h2>
                 <div class="row justify-content-center">
+                    <!-- Trưởng Khoa -->
                     <div class="col-md-4 mb-4 reveal">
                         <div class="glass-card p-4 text-center h-100">
-                            <img src="https://placehold.co/150x150?text=Dean" alt="Dean" class="rounded-circle mb-3 border border-4 border-white shadow-sm" width="150">
-                            <h5 class="fw-bold mb-1">TS. Nguyễn Văn A</h5>
+                            <img src="https://placehold.co/150x150?text=TS.+Nguyen+Thuc+Hai" alt="TS. Nguyễn Thục Hải"
+                                class="rounded-circle mb-3 border border-4 border-white shadow-sm" width="150">
+                            <h5 class="fw-bold mb-1">TS. Nguyễn Thục Hải</h5>
                             <p class="text-primary small fw-bold">Trưởng Khoa</p>
-                            <p class="small text-secondary">Chuyên gia về Trí tuệ nhân tạo và Học máy với hơn 20 năm kinh nghiệm.</p>
+                            <p class="small text-secondary">Quản lý chung, định hướng chiến lược phát triển chương trình
+                                đào tạo và hợp tác chiến lược của Khoa CNTT.</p>
                         </div>
                     </div>
+
+                    <!-- Phó Trưởng Khoa 1 -->
                     <div class="col-md-4 mb-4 reveal" style="transition-delay: 0.1s;">
                         <div class="glass-card p-4 text-center h-100">
-                            <img src="https://placehold.co/150x150?text=Vice+Dean" alt="Vice Dean" class="rounded-circle mb-3 border border-4 border-white shadow-sm" width="150">
-                            <h5 class="fw-bold mb-1">ThS. Trần Thị B</h5>
+                            <img src="https://placehold.co/150x150?text=TS.+Tiet+Gia+Hong" alt="TS. Tiết Gia Hồng"
+                                class="rounded-circle mb-3 border border-4 border-white shadow-sm" width="150">
+                            <h5 class="fw-bold mb-1">TS. Tiết Gia Hồng</h5>
                             <p class="text-primary small fw-bold">Phó Trưởng Khoa</p>
-                            <p class="small text-secondary">Phụ trách công tác đào tạo và quản lý sinh viên.</p>
+                            <p class="small text-secondary">Phụ trách công tác nghiên cứu khoa học, chuyển giao công
+                                nghệ và hợp tác doanh nghiệp, quốc tế.</p>
                         </div>
                     </div>
+
+                    <!-- Phó Trưởng Khoa 2 -->
                     <div class="col-md-4 mb-4 reveal" style="transition-delay: 0.2s;">
                         <div class="glass-card p-4 text-center h-100">
-                            <img src="https://placehold.co/150x150?text=Vice+Dean" alt="Vice Dean" class="rounded-circle mb-3 border border-4 border-white shadow-sm" width="150">
-                            <h5 class="fw-bold mb-1">TS. Lê Văn C</h5>
+                            <img src="https://placehold.co/150x150?text=ThS.+Nguyen+Thanh+Hiep"
+                                alt="ThS. Nguyễn Thành Hiệp"
+                                class="rounded-circle mb-3 border border-4 border-white shadow-sm" width="150">
+                            <h5 class="fw-bold mb-1">ThS. Nguyễn Thành Hiệp</h5>
                             <p class="text-primary small fw-bold">Phó Trưởng Khoa</p>
-                            <p class="small text-secondary">Phụ trách nghiên cứu khoa học và hợp tác quốc tế.</p>
+                            <p class="small text-secondary">Phụ trách công tác quản lý đào tạo, phát triển học liệu,
+                                khảo thí và điều hành các hoạt động học vụ của sinh viên.</p>
                         </div>
                     </div>
                 </div>
@@ -264,4 +295,5 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>

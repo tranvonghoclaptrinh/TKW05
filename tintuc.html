@@ -1,150 +1,204 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tin tức & Sự kiện | Khoa CNTT - HUIT</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+
     <style>
-/* ==========================================================================
-   MODULE: TIN TỨC & SỰ KIỆN (NEWS SECTION) - CĂN CHỈNH HOÀN THIỆN
-   ========================================================================== */
-
-/* 1. Nút Tab: Đã thêm Flexbox để cân chữ */
-.id-news-section #newsTabs {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 2rem !important;
-}
-
-.id-news-section #newsTabs .nav-link {
-    display: flex !important;           /* Kích hoạt Flexbox */
-    align-items: center !important;     /* Cân giữa dọc */
-    justify-content: center !important; /* Cân giữa ngang */
-    color: var(--text-main) !important;
-    background: var(--glass-bg) !important;
-    border: 1px solid var(--glass-border) !important;
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    transition: var(--transition-standard);
-    white-space: nowrap;
-    padding: 0.6rem 1.5rem !important;
-    height: 45px; /* Chiều cao cố định để cân đối tốt hơn */
-}
-
-/* 2. Cấu trúc thẻ Tin tức (đã thêm căn giữa body) */
-.news-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: var(--glass-blur);
-    color: var(--text-main);
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
-                box-shadow 0.3s ease, 
-                border-color 0.3s ease !important;
-    border-radius: 16px;
-    overflow: hidden;
-}
-
-.news-card .card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 1.25rem;
-}
-
-/* 3. Phân trang (Pagination): Đã thêm Flexbox cân chữ */
-.id-news-section .pagination {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 2rem;
-}
-
-.id-news-section .pagination .page-link {
-    display: flex !important;           /* Kích hoạt Flexbox */
-    align-items: center !important;     /* Cân giữa dọc */
-    justify-content: center !important; /* Cân giữa ngang */
-    color: var(--text-main) !important;
-    background: var(--glass-bg) !important;
-    border: 1px solid var(--glass-border) !important;
-    transition: var(--transition-standard);
-    border-radius: 8px !important;
-    width: 40px;  /* Đảm bảo nút hình vuông/tròn đều */
-    height: 40px; /* Đảm bảo chiều cao để cân chữ */
-    padding: 0 !important; /* Xóa padding để Flexbox làm việc chính xác */
-}
-
-/* 4. Tiện ích Text Line Clamp */
-.line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;  
-    overflow: hidden;
-}
-
-.line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;  
-    overflow: hidden;
-}
-
-/* 5. Responsive Breakpoints */
-@media (max-width: 576px) {
-    .id-news-section .nav-link {
-        font-size: 0.85rem;
-        height: 40px; /* Nhỏ hơn chút cho mobile */
-        padding: 0.5rem 1rem !important;
-    }
-}
-/* ==========================================================================
-   FIXED: QUẢN LÝ MÀU SẮC TAB (KHÔNG BỊ MẤT KHI HOVER/CLICK)
-   ========================================================================== */
-
-/* Trạng thái mặc định */
-.id-news-section #newsTabs .nav-link {
-    color: var(--text-main) !important;
-    background: var(--glass-bg) !important;
-    border: 1px solid var(--glass-border) !important;
-    transition: all 0.3s ease !important; /* Dùng all để giữ transition ổn định */
-}
-
-/* Trạng thái Hover: Giữ nguyên các thuộc tính, chỉ thay đổi vị trí */
-.id-news-section #newsTabs .nav-link:hover {
-    transform: translateY(-2px);
-    border-color: var(--primary-color) !important;
-    background: var(--glass-bg) !important; /* Ép giữ màu nền */
-    color: var(--primary-color) !important;  /* Đổi màu chữ nhẹ khi hover */
-}
-
-/* TRẠNG THÁI ACTIVE (CLICK): Ưu tiên cao nhất */
-.id-news-section #newsTabs .nav-link.active {
-    background: var(--primary-color) !important;
-    color: #ffffff !important;
-    border-color: var(--primary-color) !important;
-    box-shadow: 0 8px 20px var(--shadow-color) !important;
-    /* Loại bỏ hiệu ứng transform nếu muốn trạng thái active đứng yên */
-    transform: translateY(0) !important; 
-}
-
-/* Ngăn chặn việc hover đè lên trạng thái active */
-.id-news-section #newsTabs .nav-link.active:hover {
-    background: var(--primary-color) !important;
-    color: #ffffff !important;
-    transform: translateY(0) !important;
-    cursor: default;
-}
         /* ==========================================================================
-           SPECIFIC DARK MODE REFINE (Kích hoạt tự động qua data-theme="dark")
-           ========================================================================== */
+   RESOLVED CONFLICT: ĐỒNG BỘ DARK MODE NEWS SECTION
+   ========================================================================== */
         [data-theme="dark"] .id-news-section {
-            --custom-neon: #00d2ff;
+            /* Đồng bộ với biến của style.css để tránh lệch màu xanh */
+            --custom-neon: var(--primary-color);
+        }
+
+        /* Sửa lỗi ẩn chữ: Tăng độ ưu tiên bằng cách kết hợp class cha */
+        [data-theme="dark"] .id-news-section .news-detail-btn {
+            background: rgba(94, 162, 255, 0.1) !important;
+            /* Dùng màu từ style.css */
+            border: 1px solid var(--custom-neon) !important;
+            color: var(--custom-neon) !important;
+            /* Hiện chữ xanh Neon rõ ràng */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        [data-theme="dark"] .id-news-section .news-detail-btn i {
+            color: var(--custom-neon) !important;
+        }
+
+        /* Hover: Chữ phải đổi sang màu tối sâu của hệ thống để dễ đọc */
+        [data-theme="dark"] .id-news-section .news-detail-btn:hover {
+            background: var(--custom-neon) !important;
+            color: var(--bg-main) !important;
+            /* #08111F từ style.css */
+            box-shadow: 0 0 15px rgba(94, 162, 255, 0.4);
+        }
+
+        [data-theme="dark"] .id-news-section .news-detail-btn:hover i {
+            color: var(--bg-main) !important;
+        }
+
+        /* ==========================================================================
+        MODULE: TIN TỨC & SỰ KIỆN (NEWS SECTION) - CĂN CHỈNH HOÀN THIỆN
+        ========================================================================== */
+
+        /* 1. Nút Tab: Đã thêm Flexbox để cân chữ */
+        .id-news-section #newsTabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2rem !important;
+        }
+
+        .id-news-section #newsTabs .nav-link {
+            display: flex !important;
+            /* Kích hoạt Flexbox */
+            align-items: center !important;
+            /* Cân giữa dọc */
+            justify-content: center !important;
+            /* Cân giữa ngang */
+            color: var(--text-main) !important;
+            background: var(--glass-bg) !important;
+            border: 1px solid var(--glass-border) !important;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            transition: var(--transition-standard);
+            white-space: nowrap;
+            padding: 0.6rem 1.5rem !important;
+            height: 45px;
+            /* Chiều cao cố định để cân đối tốt hơn */
+        }
+
+        /* 2. Cấu trúc thẻ Tin tức (đã thêm căn giữa body) */
+        .news-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: var(--glass-blur);
+            color: var(--text-main);
+            transition:
+                transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease !important;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .news-card .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.25rem;
+        }
+
+        /* 3. Phân trang (Pagination): Đã thêm Flexbox cân chữ */
+        .id-news-section .pagination {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 2rem;
+        }
+
+        .id-news-section .pagination .page-link {
+            display: flex !important;
+            /* Kích hoạt Flexbox */
+            align-items: center !important;
+            /* Cân giữa dọc */
+            justify-content: center !important;
+            /* Cân giữa ngang */
+            color: var(--text-main) !important;
+            background: var(--glass-bg) !important;
+            border: 1px solid var(--glass-border) !important;
+            transition: var(--transition-standard);
+            border-radius: 8px !important;
+            width: 40px;
+            /* Đảm bảo nút hình vuông/tròn đều */
+            height: 40px;
+            /* Đảm bảo chiều cao để cân chữ */
+            padding: 0 !important;
+            /* Xóa padding để Flexbox làm việc chính xác */
+        }
+
+        /* 4. Tiện ích Text Line Clamp */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* 5. Responsive Breakpoints */
+        @media (max-width: 576px) {
+            .id-news-section .nav-link {
+                font-size: 0.85rem;
+                height: 40px;
+                /* Nhỏ hơn chút cho mobile */
+                padding: 0.5rem 1rem !important;
+            }
+        }
+
+        /* ==========================================================================
+        FIXED: QUẢN LÝ MÀU SẮC TAB (KHÔNG BỊ MẤT KHI HOVER/CLICK)
+        ========================================================================== */
+
+        /* Trạng thái mặc định */
+        .id-news-section #newsTabs .nav-link {
+            color: var(--text-main) !important;
+            background: var(--glass-bg) !important;
+            border: 1px solid var(--glass-border) !important;
+            transition: all 0.3s ease !important;
+            /* Dùng all để giữ transition ổn định */
+        }
+
+        /* Trạng thái Hover: Giữ nguyên các thuộc tính, chỉ thay đổi vị trí */
+        .id-news-section #newsTabs .nav-link:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-color) !important;
+            background: var(--glass-bg) !important;
+            /* Ép giữ màu nền */
+            color: var(--primary-color) !important;
+            /* Đổi màu chữ nhẹ khi hover */
+        }
+
+        /* TRẠNG THÁI ACTIVE (CLICK): Ưu tiên cao nhất */
+        .id-news-section #newsTabs .nav-link.active {
+            background: var(--primary-color) !important;
+            color: #ffffff !important;
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 8px 20px var(--shadow-color) !important;
+            /* Loại bỏ hiệu ứng transform nếu muốn trạng thái active đứng yên */
+            transform: translateY(0) !important;
+        }
+
+        /* Ngăn chặn việc hover đè lên trạng thái active */
+        .id-news-section #newsTabs .nav-link.active:hover {
+            background: var(--primary-color) !important;
+            color: #ffffff !important;
+            transform: translateY(0) !important;
+            cursor: default;
+        }
+
+        /* ==========================================================================
+        SPECIFIC DARK MODE REFINE (Kích hoạt tự động qua data-theme="dark")
+        ========================================================================== */
+        [data-theme="dark"] .id-news-section {
+            --custom-neon: #5EA2FF;
         }
 
         [data-theme="dark"] .id-news-section h1,
@@ -158,6 +212,7 @@
         }
     </style>
 </head>
+
 <body>
     <div id="header-placeholder"></div>
 
@@ -168,16 +223,28 @@
             <!-- Category Tabs -->
             <ul class="nav nav-tabs mb-5 justify-content-center border-0 reveal" id="newsTabs" role="tablist">
                 <li class="nav-item">
-                    <button class="nav-link active border-0 rounded-pill px-4 mx-2 glass-card btn-interactive" data-category="all">Tất cả</button>
+                    <button class="nav-link active border-0 rounded-pill px-4 mx-2 glass-card btn-interactive"
+                        data-category="all">
+                        Tất cả
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link border-0 rounded-pill px-4 mx-2 glass-card btn-interactive" data-category="academic">Tin học vụ</button>
+                    <button class="nav-link border-0 rounded-pill px-4 mx-2 glass-card btn-interactive"
+                        data-category="academic">
+                        Tin học vụ
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link border-0 rounded-pill px-4 mx-2 glass-card btn-interactive" data-category="activity">Hoạt động sinh viên</button>
+                    <button class="nav-link border-0 rounded-pill px-4 mx-2 glass-card btn-interactive"
+                        data-category="activity">
+                        Hoạt động sinh viên
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link border-0 rounded-pill px-4 mx-2 glass-card btn-interactive" data-category="event">Sự kiện</button>
+                    <button class="nav-link border-0 rounded-pill px-4 mx-2 glass-card btn-interactive"
+                        data-category="event">
+                        Sự kiện
+                    </button>
                 </li>
             </ul>
 
@@ -206,112 +273,143 @@
         const newsData = [
             {
                 id: 1,
-                title: "Khen thưởng sinh viên Khoa CNTT đạt thành tích xuất sắc tại Kỳ thi Olympic Tin học Sinh viên Toàn quốc năm học vừa qua",
+                title:
+                    "Khen thưởng sinh viên Khoa CNTT đạt thành tích xuất sắc tại Kỳ thi Olympic Tin học Sinh viên Toàn quốc năm học vừa qua",
                 date: "25/05/2026",
                 category: "academic",
-                excerpt: "Ban chủ nhiệm Khoa Công nghệ thông tin trường Đại học Công thương TP.HCM đã tổ chức buổi tuyên dương và trao thưởng cho các đội tuyển đạt giải cao tại cuộc thi học thuật danh giá cấp Quốc gia.",
-                image: "https://placehold.co/600x400?text=HUIT_Olympic_Tin_Hoc_Award"
+                excerpt:
+                    "Ban chủ nhiệm Khoa Công nghệ thông tin trường Đại học Công thương TP.HCM đã tổ chức buổi tuyên dương và trao thưởng cho các đội tuyển đạt giải cao tại cuộc thi học thuật danh giá cấp Quốc gia.",
+                image: "https://placehold.co/600x400?text=HUIT_Olympic_Tin_Hoc_Award",
             },
             {
                 id: 2,
-                title: "Thông báo lịch nộp hồ sơ xét tốt nghiệp Đợt 1 năm 2026 dành cho Sinh viên Đại học chính quy bậc Đại học",
+                title:
+                    "Thông báo lịch nộp hồ sơ xét tốt nghiệp Đợt 1 năm 2026 dành cho Sinh viên Đại học chính quy bậc Đại học",
                 date: "18/05/2026",
                 category: "academic",
-                excerpt: "Văn phòng Khoa CNTT thông báo chi tiết quy trình, các biểu mẫu kiểm tra chứng chỉ đầu ra Tin học, Ngoại ngữ và thời hạn đóng hồ sơ chuẩn bị cho Hội đồng xét tốt nghiệp sắp tới.",
-                image: "https://placehold.co/600x400?text=HUIT_Xet_Tot_Nghiep_Dot1"
+                excerpt:
+                    "Văn phòng Khoa CNTT thông báo chi tiết quy trình, các biểu mẫu kiểm tra chứng chỉ đầu ra Tin học, Ngoại ngữ và thời hạn đóng hồ sơ chuẩn bị cho Hội đồng xét tốt nghiệp sắp tới.",
+                image: "https://placehold.co/600x400?text=HUIT_Xet_Tot_Nghiep_Dot1",
             },
             {
                 id: 3,
-                title: "Sôi nổi các trận tranh tài vòng Chung kết Hội thao Sinh viên Khoa Công nghệ thông tin năm học 2025 - 2026",
+                title:
+                    "Sôi nổi các trận tranh tài vòng Chung kết Hội thao Sinh viên Khoa Công nghệ thông tin năm học 2025 - 2026",
                 date: "12/05/2026",
                 category: "activity",
-                excerpt: "Sau hơn một tháng tranh tài kịch tính ở các bộ môn Bóng đá nam, Bóng đá nữ, Cầu lông và Thể thao điện tử (Valorant/Liên Quân), Hội thao đã chính thức tìm ra những nhà vô địch xứng đáng.",
-                image: "https://placehold.co/600x400?text=HUIT_Hoi_Thao_Khoa_CNTT"
+                excerpt:
+                    "Sau hơn một tháng tranh tài kịch tính ở các bộ môn Bóng đá nam, Bóng đá nữ, Cầu lông và Thể thao điện tử (Valorant/Liên Quân), Hội thao đã chính thức tìm ra những nhà vô địch xứng đáng.",
+                image: "https://placehold.co/600x400?text=HUIT_Hoi_Thao_Khoa_CNTT",
             },
             {
                 id: 4,
-                title: "Hội thảo Khoa học: Ứng dụng Trí tuệ nhân tạo tạo sinh (Generative AI) trong Phân tích dữ liệu doanh nghiệp hiện đại",
+                title:
+                    "Hội thảo Khoa học: Ứng dụng Trí tuệ nhân tạo tạo sinh (Generative AI) trong Phân tích dữ liệu doanh nghiệp hiện đại",
                 date: "05/05/2026",
                 category: "event",
-                excerpt: "Buổi chia sẻ chuyên đề có sự tham gia của các chuyên gia công nghệ hàng đầu đến từ doanh nghiệp đối tác, định hướng nghiên cứu sâu cho sinh viên ngành Hệ thống thông tin và Khoa học máy tính.",
-                image: "https://placehold.co/600x400?text=HUIT_Generative_AI_Workshop"
+                excerpt:
+                    "Buổi chia sẻ chuyên đề có sự tham gia của các chuyên gia công nghệ hàng đầu đến từ doanh nghiệp đối tác, định hướng nghiên cứu sâu cho sinh viên ngành Hệ thống thông tin và Khoa học máy tính.",
+                image:
+                    "https://placehold.co/600x400?text=HUIT_Generative_AI_Workshop",
             },
             {
                 id: 5,
-                title: "Chiến dịch Tình nguyện Mùa hè xanh năm 2026 Khoa CNTT chính thức khởi động chương trình tuyển quân",
+                title:
+                    "Chiến dịch Tình nguyện Mùa hè xanh năm 2026 Khoa CNTT chính thức khởi động chương trình tuyển quân",
                 date: "28/04/2026",
                 category: "activity",
-                excerpt: "Ban chấp hành Đoàn - Hội Khoa CNTT phát động chương trình tuyển chiến sĩ tham gia các mặt trận thiện nguyện, ứng dụng kiến thức chuyên môn tin học hóa nông thôn và sửa chữa máy tính cộng đồng.",
-                image: "https://placehold.co/600x400?text=HUIT_Mua_He_Xanh_Recruitment"
+                excerpt:
+                    "Ban chấp hành Đoàn - Hội Khoa CNTT phát động chương trình tuyển chiến sĩ tham gia các mặt trận thiện nguyện, ứng dụng kiến thức chuyên môn tin học hóa nông thôn và sửa chữa máy tính cộng đồng.",
+                image:
+                    "https://placehold.co/600x400?text=HUIT_Mua_He_Xanh_Recruitment",
             },
             {
                 id: 6,
-                title: "Lễ ký kết biên bản ghi nhớ hợp tác chiến lược (MOU) về đào tạo nguồn nhân lực chất lượng cao giữa HUIT và DXC Technology",
+                title:
+                    "Lễ ký kết biên bản ghi nhớ hợp tác chiến lược (MOU) về đào tạo nguồn nhân lực chất lượng cao giữa HUIT và DXC Technology",
                 date: "22/04/2026",
                 category: "event",
-                excerpt: "Sự kiện mở ra hàng trăm cơ hội thực tập, trải nghiệm dự án thực tế và cam kết đầu ra việc làm hấp dẫn cho sinh viên các chuyên ngành Công nghệ phần mềm và Mạng máy tính của nhà trường.",
-                image: "https://placehold.co/600x400?text=HUIT_DXC_MOU_Signing"
+                excerpt:
+                    "Sự kiện mở ra hàng trăm cơ hội thực tập, trải nghiệm dự án thực tế và cam kết đầu ra việc làm hấp dẫn cho sinh viên các chuyên ngành Công nghệ phần mềm và Mạng máy tính của nhà trường.",
+                image: "https://placehold.co/600x400?text=HUIT_DXC_MOU_Signing",
             },
             {
                 id: 7,
-                title: "Đoàn trường HUIT tổ chức chuỗi hoạt động kỷ niệm 95 năm ngày thành lập Đoàn TNCS Hồ Chí Minh (26/3/1931 - 26/3/2026)",
+                title:
+                    "Đoàn trường HUIT tổ chức chuỗi hoạt động kỷ niệm 95 năm ngày thành lập Đoàn TNCS Hồ Chí Minh (26/3/1931 - 26/3/2026)",
                 date: "26/03/2026",
                 category: "activity",
-                excerpt: "Ngày hội văn hóa, hội trại truyền thống và các hoạt động tuyên dương cán bộ Đoàn - Hội xuất sắc thuộc Khoa Công nghệ thông tin diễn ra bùng nổ, thu hút hàng ngàn sinh viên tham gia.",
-                image: "https://placehold.co/600x400?text=HUIT_95_Nam_Ngay_Thanh_Lap_Doan"
+                excerpt:
+                    "Ngày hội văn hóa, hội trại truyền thống và các hoạt động tuyên dương cán bộ Đoàn - Hội xuất sắc thuộc Khoa Công nghệ thông tin diễn ra bùng nổ, thu hút hàng ngàn sinh viên tham gia.",
+                image:
+                    "https://placehold.co/600x400?text=HUIT_95_Nam_Ngay_Thanh_Lap_Doan",
             },
             {
                 id: 8,
-                title: "Khai mạc ngày hội Việc làm và Kết nối Doanh nghiệp - HUIT Career Day 2026 với hơn 50 doanh nghiệp tham gia",
+                title:
+                    "Khai mạc ngày hội Việc làm và Kết nối Doanh nghiệp - HUIT Career Day 2026 với hơn 50 doanh nghiệp tham gia",
                 date: "20/03/2026",
                 category: "event",
-                excerpt: "Cơ hội tuyển dụng trực tiếp cực lớn dành cho sinh viên CNTT năm cuối và sinh viên tìm kiếm vị trí thực tập, học việc trong các mảng lập trình Web, Mobile, DevOps và Tester.",
-                image: "https://placehold.co/600x400?text=HUIT_Career_Day_2026"
+                excerpt:
+                    "Cơ hội tuyển dụng trực tiếp cực lớn dành cho sinh viên CNTT năm cuối và sinh viên tìm kiếm vị trí thực tập, học việc trong các mảng lập trình Web, Mobile, DevOps và Tester.",
+                image: "https://placehold.co/600x400?text=HUIT_Career_Day_2026",
             },
             {
                 id: 9,
-                title: "Thông báo đăng ký đề tài Nghiên cứu khoa học cấp Sinh viên năm học 2025 - 2026 bổ sung giai đoạn 2",
+                title:
+                    "Thông báo đăng ký đề tài Nghiên cứu khoa học cấp Sinh viên năm học 2025 - 2026 bổ sung giai đoạn 2",
                 date: "15/03/2026",
                 category: "academic",
-                excerpt: "Hội đồng Khoa học Khoa CNTT tạo điều kiện cho các nhóm sinh viên có ý tưởng đột phá về IoT, Blockchain và Trí tuệ nhân tạo đăng ký nhận tài trợ kinh phí nghiên cứu phục vụ đồ án.",
-                image: "https://placehold.co/600x400?text=HUIT_Dang_Ky_NCKH_Sinh_Vien"
+                excerpt:
+                    "Hội đồng Khoa học Khoa CNTT tạo điều kiện cho các nhóm sinh viên có ý tưởng đột phá về IoT, Blockchain và Trí tuệ nhân tạo đăng ký nhận tài trợ kinh phí nghiên cứu phục vụ đồ án.",
+                image:
+                    "https://placehold.co/600x400?text=HUIT_Dang_Ky_NCKH_Sinh_Vien",
             },
             {
                 id: 10,
-                title: "Đội tuyển Olympic Tin học HUIT chính thức xuất quân tham gia tranh tài toàn quốc tại Đà Nẵng",
+                title:
+                    "Đội tuyển Olympic Tin học HUIT chính thức xuất quân tham gia tranh tài toàn quốc tại Đà Nẵng",
                 date: "10/03/2026",
                 category: "academic",
-                excerpt: "Lễ ra quân ấm cúng do Ban giám hiệu nhà trường tổ chức nhằm động viên, dặn dò các thành viên khối chuyên và không chuyên thuộc Khoa Công nghệ thông tin nỗ lực mang vinh quang về cho trường.",
-                image: "https://placehold.co/600x400?text=HUIT_Olympic_Tin_Hoc_Departure"
+                excerpt:
+                    "Lễ ra quân ấm cúng do Ban giám hiệu nhà trường tổ chức nhằm động viên, dặn dò các thành viên khối chuyên và không chuyên thuộc Khoa Công nghệ thông tin nỗ lực mang vinh quang về cho trường.",
+                image:
+                    "https://placehold.co/600x400?text=HUIT_Olympic_Tin_Hoc_Departure",
             },
             {
                 id: 11,
-                title: "Giải bóng đá truyền thống Nam - Nữ Sinh viên HUIT chính thức khởi tranh vòng bảng đầy kịch tính",
+                title:
+                    "Giải bóng đá truyền thống Nam - Nữ Sinh viên HUIT chính thức khởi tranh vòng bảng đầy kịch tính",
                 date: "05/03/2026",
                 category: "activity",
-                excerpt: "Đội tuyển bóng đá đại diện cho liên quân các khóa của Khoa CNTT đã có trận ra quân thắng lợi rực rỡ, thể hiện tinh thần thể thao cao thượng và sự cổ vũ cuồng nhiệt từ các cổ động viên.",
-                image: "https://placehold.co/600x400?text=HUIT_Giai_Bong_Da_Sinh_Vien"
+                excerpt:
+                    "Đội tuyển bóng đá đại diện cho liên quân các khóa của Khoa CNTT đã có trận ra quân thắng lợi rực rỡ, thể hiện tinh thần thể thao cao thượng và sự cổ vũ cuồng nhiệt từ các cổ động viên.",
+                image:
+                    "https://placehold.co/600x400?text=HUIT_Giai_Bong_Da_Sinh_Vien",
             },
             {
                 id: 12,
-                title: "Chương trình tập huấn: Hướng dẫn viết bài báo khoa học quốc tế chuẩn ISI/Scopus cho Giảng viên và Học viên cao học Khoa CNTT",
+                title:
+                    "Chương trình tập huấn: Hướng dẫn viết bài báo khoa học quốc tế chuẩn ISI/Scopus cho Giảng viên và Học viên cao học Khoa CNTT",
                 date: "02/03/2026",
                 category: "academic",
-                excerpt: "Buổi tọa đàm chuyên môn sâu do các Giáo sư đầu ngành chủ trì, nhằm nâng cao năng lực công bố quốc tế và xếp hạng học thuật của toàn khoa trong năm học 2026.",
-                image: "https://placehold.co/600x400?text=HUIT_ISI_Scopus_Research_Workshop"
-            }
+                excerpt:
+                    "Buổi tọa đàm chuyên môn sâu do các Giáo sư đầu ngành chủ trì, nhằm nâng cao năng lực công bố quốc tế và xếp hạng học thuật của toàn khoa trong năm học 2026.",
+                image:
+                    "https://placehold.co/600x400?text=HUIT_ISI_Scopus_Research_Workshop",
+            },
         ];
 
-        let currentCategory = 'all';
+        let currentCategory = "all";
         let currentPage = 1;
         const itemsPerPage = 6; // Đổi thành 6 bài trên 1 trang để tạo cấu trúc lưới 2 dòng rõ ràng
 
         function renderNews() {
-            const container = $('#news-container');
+            const container = $("#news-container");
             container.empty();
 
-            const filtered = newsData.filter(item => {
-                return currentCategory === 'all' || item.category === currentCategory;
+            const filtered = newsData.filter((item) => {
+                return currentCategory === "all" || item.category === currentCategory;
             });
 
             if (filtered.length === 0) {
@@ -329,46 +427,64 @@
             const endIndex = startIndex + itemsPerPage;
             const paginatedItems = filtered.slice(startIndex, endIndex);
 
-            paginatedItems.forEach(item => {
+            paginatedItems.forEach((item) => {
+                // Chuẩn hóa Badge Category
+                let badgeClass = "bg-primary";
+                let categoryName = "Sự kiện";
+                if (item.category === "academic") {
+                    badgeClass = "bg-danger";
+                    categoryName = "Học vụ";
+                } else if (item.category === "activity") {
+                    badgeClass = "bg-success";
+                    categoryName = "Hoạt động";
+                }
+
                 const card = `
-                    <div class="col-md-6 col-lg-4 reveal">
-                        <div class="glass-card news-card h-100 overflow-hidden d-flex flex-column justify-content-between">
-                            <div class="position-relative overflow-hidden" style="height: 200px;">
-                                <img src="${item.image}" alt="${item.title}" class="w-100 h-100 object-fit-cover transition-standard">
-                            </div>
-                            <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
-                                <div>
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="badge bg-primary opacity-75">${item.category === 'academic' ? 'Học vụ' : item.category === 'activity' ? 'Hoạt động' : 'Sự kiện'}</span>
-                                        <small class="text-muted"><i class="far fa-calendar-alt me-1"></i>${item.date}</small>
-                                    </div>
-                                    <h5 class="card-title fw-bold fs-6 mb-2 line-clamp-2">${item.title}</h5>
-                                    <p class="card-text text-secondary small mb-4 line-clamp-3">${item.excerpt}</p>
-                                </div>
-                                <a href="#" class="text-primary fw-bold text-decoration-none small mt-auto btn-interactive d-inline-block">
-                                    Xem chi tiết <i class="fas fa-chevron-right ms-1"></i>
-                                </a>
-                            </div>
+        <div class="col-md-6 col-lg-4 reveal">
+            <div class="glass-card news-card h-100 overflow-hidden d-flex flex-column">
+                <div class="position-relative overflow-hidden w-100" style="height: 200px;">
+                    <img src="${item.image}" alt="${item.title}" class="w-100 h-100 object-fit-cover transition-standard">
+                </div>
+                
+                <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge ${badgeClass} bg-opacity-85 text-white px-2 py-1 small fw-semibold">${categoryName}</span>
+                            <small class="text-muted"><i class="far fa-calendar-alt me-1"></i>${item.date}</small>
                         </div>
+                        <h5 class="card-title fw-bold fs-6 mb-2 line-clamp-2" style="min-height: 2.6rem; line-height: 1.3;">${item.title}</h5>
+                        <p class="card-text text-secondary small mb-0 line-clamp-3" style="min-height: 3.5rem; line-height: 1.4;">${item.excerpt}</p>
                     </div>
-                `;
+                    
+                    <div class="pt-2 border-top border-light border-opacity-10 mt-auto">
+                        <a href="#" class="btn btn-sm d-flex align-items-center justify-content-between px-3 py-2 news-detail-btn">
+                            <span class="fw-bold small text-uppercase tracking-wider">Xem chi tiết</span>
+                            <i class="fas fa-arrow-right small transition-standard"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
                 container.append(card);
             });
 
             renderPagination(filtered.length);
-            setTimeout(() => { $('.reveal').addClass('active'); }, 50);
+            setTimeout(() => {
+                $(".reveal").addClass("active");
+            }, 50);
         }
 
         function renderPagination(totalItems) {
             const totalPages = Math.ceil(totalItems / itemsPerPage);
-            const pagContainer = $('#pagination');
+            const pagContainer = $("#pagination");
             pagContainer.empty();
 
             if (totalPages <= 1) return;
 
             for (let i = 1; i <= totalPages; i++) {
                 pagContainer.append(`
-                    <li class="page-item ${i === currentPage ? 'active' : ''}">
+                    <li class="page-item ${i === currentPage ? "active" : ""}">
                         <a class="page-link border-0 mx-1 rounded glass-card" href="javascript:void(0);" onclick="changePage(${i})">${i}</a>
                     </li>
                 `);
@@ -378,20 +494,23 @@
         window.changePage = (page) => {
             currentPage = page;
             renderNews();
-            document.querySelector('.id-news-section').scrollIntoView({ behavior: 'smooth' });
+            document
+                .querySelector(".id-news-section")
+                .scrollIntoView({ behavior: "smooth" });
         };
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             renderNews();
 
-            $('#newsTabs button').click(function() {
-                $('#newsTabs button').removeClass('active');
-                $(this).addClass('active');
-                currentCategory = $(this).data('category');
-                currentPage = 1; 
+            $("#newsTabs button").click(function () {
+                $("#newsTabs button").removeClass("active");
+                $(this).addClass("active");
+                currentCategory = $(this).data("category");
+                currentPage = 1;
                 renderNews();
             });
         });
     </script>
 </body>
+
 </html>
