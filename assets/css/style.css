@@ -48,6 +48,7 @@
     color: var(--text-main) !important;
     font-size: 0.9rem;
     transition: var(--transition-standard);
+    width: 150px; /* Cố định chiều rộng nhỏ hơn để tránh chiếm chỗ */
 }
 
 /* Xử lý dải chữ placeholder gợi ý theo chế độ màu */
@@ -88,21 +89,21 @@
     .navbar-collapse {
         display: flex !important;
         align-items: center;
+        flex-wrap: nowrap; /* Ngăn các thành phần bên trong xuống dòng */
     }
 
     /* Đẩy toàn bộ menu và form tìm kiếm sang trái, nhường chỗ cho nút Theme */
     .custom-nav-grid {
         margin-left: auto !important;
-        /* Đẩy menu ra xa khỏi logo */
         margin-right: 0 !important;
+        flex-shrink: 0; /* Ngăn menu bị co lại quá mức */
     }
 
     /* Đảm bảo nút Theme luôn nằm ở cuối cùng */
     .theme-item {
         order: 99;
         /* Đẩy xuống cuối danh sách */
-        margin-left: 20px !important;
-        /* Khoảng cách giữa Search và nút Theme */
+        margin-left: 10px !important; /* Giảm khoảng cách để tiết kiệm không gian */
     }
 }
 
