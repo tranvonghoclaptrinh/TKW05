@@ -1218,6 +1218,14 @@ footer hr {
     }
 }
 
+/* Responsive Chatbox Styling */
+.huit-chat-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1050;
+}
+
 @media (max-width: 575px) {
     .navbar-brand-title {
         max-width: 210px;
@@ -1236,6 +1244,20 @@ footer hr {
     .chat-box-container {
         right: 12px;
         bottom: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .huit-chat-wrapper {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    #chat-window-box {
+        width: 90vw !important;
+        height: 70vh !important;
+        bottom: 75px !important;
+        right: 0 !important;
     }
 }
 

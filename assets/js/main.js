@@ -92,7 +92,7 @@ class ChatBox {
         if ($('.huit-chat-wrapper').length > 0) return;
 
         const chatContainer = $(`
-            <div class="huit-chat-wrapper" style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
+            <div class="huit-chat-wrapper">
                 <button id="chat-toggle-trigger" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-lg btn-interactive" style="width: 60px; height: 60px; font-size: 1.5rem; background: var(--primary-color); border: none;">
                     <i class="fas fa-comments"></i>
                 </button>
