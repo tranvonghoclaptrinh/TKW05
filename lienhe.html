@@ -365,7 +365,7 @@
     <script type="text/javascript">
         (function () {
             // Khởi tạo mã định danh EmailJS của bạn (Thay thế bằng USER_ID thực tế)
-            emailjs.init("YOUR_USER_ID");
+            emailjs.init("EcEUtM1EXDidE6STV");
         })();
 
         $(document).ready(function () {
@@ -391,7 +391,7 @@
 
                 // Thiết lập tham số chuyển phát thư điện tử thông qua SDK
                 const templateParams = {
-                    to_email: 'kcntt@huit.edu.vn',
+                    to_email: 'v.thanhle.forwork@gmail.com',
                     from_name: name,
                     from_email: email,
                     phone: phone,
@@ -405,7 +405,7 @@
                 submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i> Đang truyền dữ liệu...');
 
                 // Thực thi lệnh truyền phát thông điệp EmailJS
-                emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                emailjs.send('service_np6u8dq', 'template_n6xl2xj', templateParams)
                     .then(function (response) {
                         console.log('EmailJS Matrix Success:', response.status, response.text);
 
